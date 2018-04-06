@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import createStore from './store'
 import Presentation from './presentation'
+import './global.sass'
 
 class App extends React.Component {
   render() {
