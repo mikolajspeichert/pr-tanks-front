@@ -1,19 +1,8 @@
 import { combineReducers } from 'redux'
-import { createReducer } from 'redux-create-reducer'
+import player from 'src/containers/Player'
 
-const EXAMPLE_ACTION = 'EXAMPLE/ACTION'
-
-const actions = {
-  EXAMPLE_ACTION,
+const gameClientsInitialState = {
+  instances: [],
 }
 
-const initialState = {}
-
-const example = createReducer(initialState, {
-  [actions.EXAMPLE_ACTION](state, action) {
-    console.log(action)
-    return { ...state }
-  },
-})
-
-export default combineReducers({ example })
+export default combineReducers({ player })

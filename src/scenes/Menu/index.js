@@ -4,7 +4,7 @@ import './style.sass'
 
 const Menu = ({ onPlay }) => (
   <div>
-    <p>Play</p>
+    <p onClick={onPlay}>Play</p>
   </div>
 )
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose, withState, withHandlers } from 'recompose'
-import Menu from './containers/Menu'
+import Menu from './scenes/Menu'
 
 const gameStates = {
   MENU: 1,
@@ -20,6 +20,7 @@ const Presentation = enhance(({ gameState, handlePlay }) => {
     case gameStates.MENU:
       return <Menu onPlay={handlePlay} />
     case gameStates.GAME:
+
     default:
       break
   }
