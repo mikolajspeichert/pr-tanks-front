@@ -1,6 +1,7 @@
 import React from 'react'
 import { compose, withState, withHandlers } from 'recompose'
 import Menu from './scenes/Menu'
+import Sockets from './services/Sockets'
 
 const gameStates = {
   MENU: 1,
@@ -10,7 +11,10 @@ const gameStates = {
 const enhance = compose(
   withState('gameState', 'setGameState', gameStates.MENU),
   withHandlers({
-    handlePlay: ({ setGameState }) => () => setGameState(gameStates.GAME),
+    handlePlay: ({ setGameState }) => () => {
+      Sockets.init()
+      setGameState(gameStates.GAME)
+    },
   })
 )
 
@@ -20,7 +24,7 @@ const Presentation = enhance(({ gameState, handlePlay }) => {
     case gameStates.MENU:
       return <Menu onPlay={handlePlay} />
     case gameStates.GAME:
-
+      return <div />
     default:
       break
   }

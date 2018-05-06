@@ -24,7 +24,9 @@
     "redux-create-reducer": "^1.1.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "socket.io-client": "^2.1.0",
+    "src": "^1.1.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
