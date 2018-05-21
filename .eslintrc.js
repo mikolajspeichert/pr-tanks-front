@@ -34,6 +34,8 @@ module.exports = {
 
     'no-shadow': 'warn',
 
+    'no-unused-expressions': 'warn',
+
     'no-restricted-syntax': 'warn',
 
     'no-param-reassign': 'off',
@@ -83,6 +85,8 @@ module.exports = {
     'react/no-unused-prop-types': 'warn',
 
     'react/self-closing-comp': 'warn',
+
+    'import/no-absolute-path': 'off',
 
     eqeqeq: 'warn',
 

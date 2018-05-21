@@ -25,8 +25,13 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
+    "resources": "^0.4.3",
     "socket.io-client": "^2.1.0",
-    "src": "^1.1.2"
+    "src": "^1.1.2",
+    "standard": "^11.0.1",
+    "store": "^2.0.12",
+    "styled": "^1.0.0",
+    "styled-components": "^3.2.6"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

@@ -1,9 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import createStore from './store'
+
+import '/src/styled/utils/global-style'
+import createStore from '/src/store'
+
 import Presentation from './presentation'
-import './global.sass'
 
 class App extends React.Component {
   render() {
