@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '/src/styled/themes'
+import { colors } from '/src/styled/themes/index'
 
 const image = require('../../resources/images/menu-bg.png')
 
@@ -19,9 +19,21 @@ const MenuItem = styled.p`
   font-family: 'Invasion2000', sans-serif;
   color: ${colors.brown};
   text-shadow: 0 4px 2px black;
-  &:hover,
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  &:hover {
+    color: ${colors.orange};
+    -webkit-transform: scale(1.03);
+    transform: scale(1.03);
+  }
   &:active {
     color: ${colors.orange};
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
   }
 `
 

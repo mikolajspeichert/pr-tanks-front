@@ -25,3 +25,6 @@ const Tank = enhance(wrapperStyles => <div style={wrapperStyles}>
 
   </Body>
 </div>)
+
+
+export default Tank
