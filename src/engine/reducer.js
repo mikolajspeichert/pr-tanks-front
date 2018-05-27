@@ -1,19 +1,14 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux-immutable'
 import { createReducer } from 'redux-create-reducer'
 import { fromJS } from 'immutable'
-import { PlayerReducer } from '../containers/Player'
-
-const actions = {
-  INIT_PLAYER: 'player/INIT',
-  INIT_OPPONENT: 'opponent/INIT',
-}
+import { actions } from './actions'
 
 const initialPlayer = fromJS({
   id: 0,
   movDir: 0.0,
   movVal: 0.0,
-  posX: 0,
-  posY: 0,
+  x: 3190,
+  y: 2540,
   health: 100,
   isFiring: false,
 })
@@ -26,7 +21,7 @@ const player = createReducer(initialPlayer, {
   },
 })
 
-const opponents = createReducer(initialPlayer, {
+const opponents = createReducer(initialOpponents, {
   [actions.INIT_OPPONENT](state, action) {
     return state.merge(fromJS({ [action.payload.id]: action.payload }))
   },
@@ -34,6 +29,10 @@ const opponents = createReducer(initialPlayer, {
 
 export default combineReducers({ player, opponents })
 
+// MIN X: 400
+// MIN Y: 430
+// MAX Y: 2540
+// MAX X: 3190
 // state:
 // {
 //    player: {

@@ -15,7 +15,7 @@ const Hull = styled.div`
   width: 100px;
   height: 100px;
   background: url(${props => props.url});
-  transform: rotate(40deg);
+  transform: scale(${({ scale }) => scale}) rotate(40deg);
 `
 
 const Turret = styled.div`
@@ -23,7 +23,7 @@ const Turret = styled.div`
   width: 200px;
   height: 200px;
   background: url(${props => props.url});
-  transform: rotate(50deg);
+  transform: scale(${({ scale }) => scale}) rotate(50deg);
 `
 
 export { Wrapper, Hull, Turret }

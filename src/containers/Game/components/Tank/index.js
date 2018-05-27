@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import Matter from 'matter-js'
-import { compose, withState, lifecycle, withProps } from 'recompose'
+import { compose, getContext } from 'recompose'
+import { playerDisplaySelector } from '/src/engine/selectors'
 import { Body } from 'react-game-kit'
-// import { getPlayerPosition } from 'src/containers/Player/selectors'
 import { Wrapper, Hull, Turret } from './styles'
 
 const hull = {
@@ -18,25 +19,26 @@ const turret = {
   gray: require('/src/resources/images/turret-gray.png'),
   yellow: require('/src/resources/images/turret-yellow.png'),
 }
-// const mapSource = require('/src/resources/images/map-bg.png')
 
 const enhance = compose(
-  connect((state, props) =>
-    // const { scale } = this.context
-    ({
-      x: 100,
-      y: 100,
+  getContext({ scale: PropTypes.number }),
+  connect((state, props) => {
+    const { scale } = props
+    const { x, y } = playerDisplaySelector(state)
+    return {
+      x: x * scale,
+      y: y * scale,
       color: 'green',
-      // scale,
-    })
-  )
+      scale,
+    }
+  })
 )
 
-const Tank = enhance(({ x, y, color }) => (
+const Tank = enhance(({ x, y, color, scale }) => (
   <Wrapper x={x} y={y}>
-    <Body args={[x, y, 100, 100]}>
-      <Hull url={hull[color]} />
-      <Turret url={turret[color]} />
+    <Body args={[x, y, 100 * scale, 100 * scale]}>
+      <Hull url={hull[color]} scale={scale} />
+      <Turret url={turret[color]} scale={scale} />
     </Body>
   </Wrapper>
 ))
