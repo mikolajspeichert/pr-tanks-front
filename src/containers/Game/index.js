@@ -3,6 +3,7 @@ import { compose, withState, lifecycle } from 'recompose'
 import Matter from 'matter-js'
 import { Loop, Stage, World, KeyListener } from 'react-game-kit'
 import Map from '../Map/index'
+import Tank from './components/Tank'
 
 const enhance = compose(
   withState('keyListener', 'setKeyListener', new KeyListener()),
@@ -29,7 +30,7 @@ const Game = enhance(() => (
     <Stage>
       <World>
         <Map />
-        {/* <Tank /> */}
+        <Tank />
       </World>
     </Stage>
   </Loop>
