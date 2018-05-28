@@ -10,6 +10,13 @@ const playerPositionSelector = createSelector(playerSelector, player => ({
   y: player.get('y'),
 }))
 
+const playerMovementSelector = createSelector(playerSelector, player => ({
+  x: player.get('x'),
+  y: player.get('y'),
+  dir: player.get('movDir'),
+  val: player.get('movVal'),
+}))
+
 const playerDisplaySelector = createSelector(
   playerPositionSelector,
   ({ x, y }) => {
@@ -25,4 +32,15 @@ const playerDisplaySelector = createSelector(
   }
 )
 
-export { playerPositionSelector, playerSelector, playerDisplaySelector }
+const playerAngleSelector = createSelector(playerSelector, player => ({
+  hullDeg: player.get('movDir'),
+  turretDeg: player.get('turretDir'),
+}))
+
+export {
+  playerPositionSelector,
+  playerSelector,
+  playerDisplaySelector,
+  playerMovementSelector,
+  playerAngleSelector,
+}

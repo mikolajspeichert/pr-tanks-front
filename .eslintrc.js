@@ -78,7 +78,7 @@ module.exports = {
 
     'react/prefer-stateless-function': 'off',
 
-    'react/prop-types': 'warn',
+    'react/prop-types': 'off',
 
     'react/forbid-prop-types': 'off',
 

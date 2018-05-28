@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 import '/src/styled/utils/global-style'
-import createStore from '/src/engine'
+import createStore from '/src/engine/store'
 
 import Presentation from './presentation'
 

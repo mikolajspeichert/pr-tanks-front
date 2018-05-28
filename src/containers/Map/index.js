@@ -20,13 +20,10 @@ const enhance = compose(
   })
 )
 
-const Map = enhance(({ x, y, scale }) => {
-  console.log(x, y)
-  return (
-    <Wrapper x={x} y={y} scale={scale}>
-      <Background url={mapSource} scale={scale} />
-    </Wrapper>
-  )
-})
+const Map = enhance(({ x, y, scale }) => (
+  <Wrapper x={x} y={y} scale={scale}>
+    <Background url={mapSource} scale={scale} />
+  </Wrapper>
+))
 
 export default Map

@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
+const Wrapper = styled.div.attrs({
+  style: ({ x, y, scale }) => ({
+    transform: `translate(${x}px, ${y}px) scale(${scale})`,
+  }),
+})`
   position: absolute;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  transform: translate(${props => props.x}px, ${props => props.y}px)
-    scale(${({ scale }) => scale});
   transform-origin: top left;
 `
 

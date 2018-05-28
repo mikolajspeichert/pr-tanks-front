@@ -1,29 +1,36 @@
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
+const Wrapper = styled.div.attrs({
+  style: ({ x, y }) => ({
+    transform: `translate(${x}px, ${y}px)`,
+  }),
+})`
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translate(${props => props.x}px, ${props => props.y}px)
-    translateZ(0);
-  transform-origin: ${props => props.origin};
 `
 
-const Hull = styled.div`
+const Hull = styled.div.attrs({
+  style: ({ scale, deg }) => ({
+    transform: `scale(${scale}) rotate(${deg}deg)`,
+  }),
+})`
   position: absolute;
   width: 100px;
   height: 100px;
   background: url(${props => props.url});
-  transform: scale(${({ scale }) => scale}) rotate(40deg);
 `
 
-const Turret = styled.div`
+const Turret = styled.div.attrs({
+  style: ({ scale, deg }) => ({
+    transform: `scale(${scale}) rotate(${deg - 90}deg)`,
+  }),
+})`
   position: absolute;
   width: 200px;
   height: 200px;
   background: url(${props => props.url});
-  transform: scale(${({ scale }) => scale}) rotate(50deg);
 `
 
 export { Wrapper, Hull, Turret }

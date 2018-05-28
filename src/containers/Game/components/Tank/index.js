@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Matter from 'matter-js'
 import { compose, getContext } from 'recompose'
-import { playerDisplaySelector } from '/src/engine/selectors'
+import { playerDisplaySelector, playerAngleSelector } from '/src/engine/selectors'
 import { Body } from 'react-game-kit'
 import { Wrapper, Hull, Turret } from './styles'
 
@@ -25,20 +25,23 @@ const enhance = compose(
   connect((state, props) => {
     const { scale } = props
     const { x, y } = playerDisplaySelector(state)
+    const { hullDeg, turretDeg } = playerAngleSelector(state)
     return {
       x: x * scale,
       y: y * scale,
       color: 'green',
       scale,
+      hullDeg,
+      turretDeg,
     }
   })
 )
 
-const Tank = enhance(({ x, y, color, scale }) => (
+const Tank = enhance(({ x, y, color, scale, hullDeg, turretDeg }) => (
   <Wrapper x={x} y={y}>
     <Body args={[x, y, 100 * scale, 100 * scale]}>
-      <Hull url={hull[color]} scale={scale} />
-      <Turret url={turret[color]} scale={scale} />
+      <Hull url={hull[color]} scale={scale} deg={hullDeg} />
+      <Turret url={turret[color]} scale={scale} deg={turretDeg} />
     </Body>
   </Wrapper>
 ))
