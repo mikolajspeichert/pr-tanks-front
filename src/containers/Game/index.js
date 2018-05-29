@@ -17,6 +17,7 @@ import {
   playerUpdatePosition,
   playerUpdateTurretAngle,
 } from '/src/engine/actions'
+import { Cursor } from '/src/styled/components'
 import {
   playerMovementSelector,
   playerDisplaySelector,
@@ -116,10 +117,11 @@ const enhance = compose(
   })
 )
 
-const Game = enhance(() => (
+const Game = enhance(({ mouseX, mouseY }) => (
   <World>
     <Map />
     <Tank />
+    <Cursor mouseX={mouseX} mouseY={mouseY} />
   </World>
 ))
 

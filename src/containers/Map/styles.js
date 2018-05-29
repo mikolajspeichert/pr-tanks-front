@@ -6,6 +6,7 @@ const Wrapper = styled.div.attrs({
   }),
 })`
   position: absolute;
+  cursor: none;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;

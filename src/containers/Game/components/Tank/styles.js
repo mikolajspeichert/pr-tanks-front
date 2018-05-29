@@ -19,6 +19,7 @@ const Hull = styled.div.attrs({
   position: absolute;
   width: 100px;
   height: 100px;
+  cursor: none;
   background: url(${props => props.url});
 `
 
@@ -29,6 +30,7 @@ const Turret = styled.div.attrs({
 })`
   position: absolute;
   width: 200px;
+  cursor: none;
   height: 200px;
   background: url(${props => props.url});
 `
