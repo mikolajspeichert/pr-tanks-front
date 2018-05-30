@@ -1,31 +1,15 @@
-import io from 'socket.io-client'
+import Sockets from './core'
 
-const WEBSOCKETS_PORT = 3001
-class Sockets {
-  init() {
-    const socketUrl = `http://localhost:${WEBSOCKETS_PORT}`
-    console.log('Init websockets on endpoint: ', socketUrl)
-    this.socket = io(socketUrl, {
-      transports: ['websocket'],
-    })
-    this.socket.on('connect_error', error => {
-      console.log('Error while connecting', error)
-    })
-  }
-
-  on(eventName, listener) {
-    this.socket.on(eventName, listener)
-  }
-
-  emit(eventName, data) {
-    this.socket.emit(eventName, data)
-  }
+const emitPositionChange = (x, y) => {
+  Sockets.emit('p', `x:${x.toFixed(2)};y:${y.toFixed(2)}`)
 }
 
-let webSocketsInstance
-
-function getInstance() {
-  return webSocketsInstance || (webSocketsInstance = new Sockets())
+const emitMovementChange = (dir, val) => {
+  Sockets.emit('m', `d:${dir.toFixed(2)};v:${val.toFixed(2)}`)
 }
 
-export default getInstance()
+const emitTurretAngleChange = angle => {
+  Sockets.emit('t', `a:${angle.toFixed(2)}`)
+}
+
+export { emitMovementChange, emitPositionChange, emitTurretAngleChange }

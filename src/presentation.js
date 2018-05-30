@@ -1,8 +1,8 @@
 import React from 'react'
 import { compose, withState, withHandlers } from 'recompose'
+import Sockets from '/src/services/Sockets/core'
 import Game from './containers/Game'
 import Menu from './containers/Menu'
-import Sockets from './services/Sockets'
 
 const gameStates = {
   MENU: 1,
@@ -13,7 +13,7 @@ const enhance = compose(
   withState('gameState', 'setGameState', gameStates.MENU),
   withHandlers({
     handlePlay: ({ setGameState }) => () => {
-      // Sockets.init()
+      Sockets.init()
       setGameState(gameStates.GAME)
     },
   })

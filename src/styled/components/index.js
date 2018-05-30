@@ -4,7 +4,7 @@ const cursor = require('/src/resources/images/gun-shooting-target.png')
 
 const Cursor = styled.div.attrs({
   style: ({ mouseX, mouseY }) => ({
-    transform: `translate(${mouseX-15}px, ${mouseY-15}px)`,
+    transform: `translate(${mouseX - 15}px, ${mouseY - 15}px)`,
   }),
 })`
   background: url(${cursor});
