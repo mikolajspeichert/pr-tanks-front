@@ -20,6 +20,13 @@ const turret = {
   yellow: require('/src/resources/images/turret-yellow.png'),
 }
 
+const turretFiring = {
+  green: require('/src/resources/images/turret-green-firing.png'),
+  red: require('/src/resources/images/turret-red-firing.png'),
+  gray: require('/src/resources/images/turret-gray-firing.png'),
+  yellow: require('/src/resources/images/turret-yellow-firing.png'),
+}
+
 const enhance = compose(
   getContext({ scale: PropTypes.number }),
   connect((state, props) => {
@@ -37,11 +44,11 @@ const enhance = compose(
   })
 )
 
-const Tank = enhance(({ x, y, color, scale, hullDeg, turretDeg }) => (
+const Tank = enhance(({ x, y, color, scale, hullDeg, turretDeg, shot }) => (
   <Wrapper x={x} y={y}>
     <Body args={[x, y, 100 * scale, 100 * scale]}>
       <Hull url={hull[color]} scale={scale} deg={hullDeg} />
-      <Turret url={turret[color]} scale={scale} deg={turretDeg} />
+      <Turret url={shot ? turretFiring[color] : turret[color]} scale={scale} deg={turretDeg} />
     </Body>
   </Wrapper>
 ))

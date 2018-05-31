@@ -18,6 +18,7 @@ import {
   playerUpdateTurretAngle,
 } from '/src/engine/actions'
 import { Cursor } from '/src/styled/components'
+import { emitShot } from '/src/services/Sockets'
 import {
   playerMovementSelector,
   playerDisplaySelector,
@@ -38,6 +39,7 @@ const enhance = compose(
     turret: playerAngleSelector(state).turretDeg,
   })),
   withState('keyListener', 'setKeyListener', new KeyListener()),
+  withState('shot', 'shoot', 0),
   withHandlers({
     update: ({
       x,
@@ -51,6 +53,8 @@ const enhance = compose(
       mouseY,
       turret,
       scale,
+      shot,
+      shoot,
     }) => () => {
       if (keys.isDown(keys.UP) && val < 3.0) {
         dispatch(playerUpdateMovement(dir, val + 0.1))
@@ -95,6 +99,14 @@ const enhance = compose(
       let newx = x - Math.cos(angle) * val
       let newy = y - Math.sin(angle) * val
       if (newx !== x || newy !== y) dispatch(playerUpdatePosition(newx, newy))
+      if (shot > 0) {
+        if (shot + 1 > 10) shoot(0)
+        else shoot(shot + 1)
+        if (shot === 1) emitShot(newx, newy, turret)
+      }
+    },
+    handleShot: ({ shoot, shot }) => () => {
+      if (shot !== 1) shoot(1)
     },
   }),
   lifecycle({
@@ -117,11 +129,11 @@ const enhance = compose(
   })
 )
 
-const Game = enhance(({ mouseX, mouseY }) => (
+const Game = enhance(({ mouseX, mouseY, handleShot, shot }) => (
   <World>
     <Map />
-    <Tank />
-    <Cursor mouseX={mouseX} mouseY={mouseY} />
+    <Tank shot={shot !== 0} />
+    <Cursor mouseX={mouseX} mouseY={mouseY} onClick={handleShot} />
   </World>
 ))
 

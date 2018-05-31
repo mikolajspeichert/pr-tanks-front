@@ -12,4 +12,11 @@ const emitTurretAngleChange = angle => {
   Sockets.emit('t', `a:${angle.toFixed(2)}`)
 }
 
-export { emitMovementChange, emitPositionChange, emitTurretAngleChange }
+const emitShot = (posX, posY, dir) => {
+  Sockets.emit(
+    's',
+    `x:${posX.toFixed(2)};y:${posY.toFixed(2)};d:${dir.toFixed(2)}`
+  )
+}
+
+export { emitMovementChange, emitPositionChange, emitTurretAngleChange, emitShot }

@@ -9,6 +9,7 @@ const actions = {
   PLAYER_UPDATE_POS: 'player/POS',
   PLAYER_UPDATE_MOV: 'player/MOV',
   PLAYER_UPDATE_TURRET: 'player/TURRET',
+  PLAYER_SHOT: 'player/SHOT',
   INIT_OPPONENT: 'opponent/INIT',
 }
 
