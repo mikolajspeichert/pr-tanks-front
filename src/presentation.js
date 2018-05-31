@@ -20,17 +20,13 @@ const enhance = compose(
 )
 
 const Presentation = enhance(({ gameState, handlePlay }) => {
-  let render
   switch (gameState) {
     case gameStates.MENU:
       return <Menu onPlay={handlePlay} />
     case gameStates.GAME:
       return <Game />
     default:
-      break
   }
-
-  return render
 })
 
 export default Presentation

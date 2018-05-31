@@ -14,7 +14,35 @@ const initialPlayer = fromJS({
   isFiring: false,
 })
 
-const initialOpponents = fromJS({})
+const initialOpponents = fromJS({
+  '1': {
+    movDir: 0,
+    movVal: 0.0,
+    turretDir: 0,
+    x: 3100,
+    y: 2540,
+    health: 100,
+    isFiring: false,
+  },
+  '2': {
+    movDir: 0,
+    movVal: 0.0,
+    turretDir: 0,
+    x: 3100,
+    y: 2340,
+    health: 100,
+    isFiring: false,
+  },
+  '3': {
+    movDir: 0,
+    movVal: 0.0,
+    turretDir: 0,
+    x: 3000,
+    y: 2540,
+    health: 100,
+    isFiring: false,
+  },
+})
 
 const player = createReducer(initialPlayer, {
   [actions.INIT_PLAYER](state, action) {

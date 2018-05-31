@@ -23,6 +23,7 @@ import {
   playerMovementSelector,
   playerDisplaySelector,
   playerAngleSelector,
+  opponentsIdsSelector,
 } from '/src/engine/selectors'
 import Map from '../Map/index'
 import Tank from './components/Tank'
@@ -37,6 +38,7 @@ const enhance = compose(
     ...playerMovementSelector(state),
     display: playerDisplaySelector(state),
     turret: playerAngleSelector(state).turretDeg,
+    opponents: opponentsIdsSelector(state),
   })),
   withState('keyListener', 'setKeyListener', new KeyListener()),
   withState('shot', 'shoot', 0),
@@ -129,10 +131,11 @@ const enhance = compose(
   })
 )
 
-const Game = enhance(({ mouseX, mouseY, handleShot, shot }) => (
+const Game = enhance(({ mouseX, mouseY, handleShot, shot, opponents }) => (
   <World>
     <Map />
     <Tank shot={shot !== 0} />
+    {opponents.map(opponent => <Tank key={opponent} id={opponent} opponent />)}
     <Cursor mouseX={mouseX} mouseY={mouseY} onClick={handleShot} />
   </World>
 ))

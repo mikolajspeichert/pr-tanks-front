@@ -5,10 +5,25 @@ const yHalf = 288
 
 const playerSelector = state => state.get('player')
 
+const playerIdSelector = state => state.getIn(['player', 'id'])
+
+const opponentsSelector = state => state.get('opponents')
+
+const opponentSelector = (state, id) => state.getIn(['opponents', id])
+
 const playerPositionSelector = createSelector(playerSelector, player => ({
   x: player.get('x'),
   y: player.get('y'),
 }))
+
+const opponentPositionSelector = createSelector(opponentSelector, player => ({
+  x: player.get('x'),
+  y: player.get('y'),
+}))
+
+const opponentsIdsSelector = createSelector(opponentsSelector, opponents =>
+  [...opponents.keys()]
+)
 
 const playerMovementSelector = createSelector(playerSelector, player => ({
   x: player.get('x'),
@@ -32,14 +47,37 @@ const playerDisplaySelector = createSelector(
   }
 )
 
+const opponentDisplaySelector = createSelector(
+  opponentPositionSelector,
+  playerPositionSelector,
+  playerDisplaySelector,
+  ({ x, y }, playerPos, playerDisp) => {
+    let a
+    let b
+    a = playerPos.x - x
+    b = playerPos.y - y
+    return { x: playerDisp.x - a, y: playerDisp.y - b }
+  }
+)
+
 const playerAngleSelector = createSelector(playerSelector, player => ({
   hullDeg: player.get('movDir'),
   turretDeg: player.get('turretDir'),
 }))
 
+const opponentAngleSelector = createSelector(opponentSelector, player => ({
+  hullDeg: player.get('movDir'),
+  turretDeg: player.get('turretDir'),
+  shot: player.get('isFiring'),
+}))
+
 export {
   playerPositionSelector,
   playerSelector,
+  playerIdSelector,
+  opponentsIdsSelector,
+  opponentAngleSelector,
+  opponentDisplaySelector,
   playerDisplaySelector,
   playerMovementSelector,
   playerAngleSelector,

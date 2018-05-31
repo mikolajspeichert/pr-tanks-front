@@ -3,9 +3,17 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Matter from 'matter-js'
 import { compose, getContext } from 'recompose'
-import { playerDisplaySelector, playerAngleSelector } from '/src/engine/selectors'
+import {
+  playerDisplaySelector,
+  playerAngleSelector,
+  opponentDisplaySelector,
+  opponentAngleSelector,
+  playerIdSelector,
+} from '/src/engine/selectors'
 import { Body } from 'react-game-kit'
 import { Wrapper, Hull, Turret } from './styles'
+
+const colors = ['green', 'red', 'gray', 'yellow']
 
 const hull = {
   green: require('/src/resources/images/hull-green.png'),
@@ -30,13 +38,27 @@ const turretFiring = {
 const enhance = compose(
   getContext({ scale: PropTypes.number }),
   connect((state, props) => {
-    const { scale } = props
+    const { scale, opponent, id } = props
+    if (opponent) {
+      const { x, y } = opponentDisplaySelector(state, id)
+      const { hullDeg, turretDeg, shot } = opponentAngleSelector(state, id)
+      return {
+        x: x * scale,
+        y: y * scale,
+        color: colors[id],
+        scale,
+        hullDeg,
+        turretDeg,
+        shot,
+      }
+    }
     const { x, y } = playerDisplaySelector(state)
     const { hullDeg, turretDeg } = playerAngleSelector(state)
+    const playerId = playerIdSelector(state)
     return {
       x: x * scale,
       y: y * scale,
-      color: 'green',
+      color: colors[playerId],
       scale,
       hullDeg,
       turretDeg,
@@ -48,7 +70,11 @@ const Tank = enhance(({ x, y, color, scale, hullDeg, turretDeg, shot }) => (
   <Wrapper x={x} y={y}>
     <Body args={[x, y, 100 * scale, 100 * scale]}>
       <Hull url={hull[color]} scale={scale} deg={hullDeg} />
-      <Turret url={shot ? turretFiring[color] : turret[color]} scale={scale} deg={turretDeg} />
+      <Turret
+        url={shot ? turretFiring[color] : turret[color]}
+        scale={scale}
+        deg={turretDeg}
+      />
     </Body>
   </Wrapper>
 ))
