@@ -1,4 +1,4 @@
-import Sockets from './core'
+import Sockets from './nativecore'
 
 const emitPositionChange = (x, y) => {
   Sockets.emit('p', `x:${x.toFixed(2)};y:${y.toFixed(2)}`)

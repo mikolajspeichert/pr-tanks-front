@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose, withState, withHandlers } from 'recompose'
-import Sockets from '/src/services/Sockets/core'
+import Sockets from '/src/services/Sockets/nativecore'
 import Game from './containers/Game'
 import Menu from './containers/Menu'
 
