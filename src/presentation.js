@@ -1,6 +1,7 @@
 import React from 'react'
 import { compose, withState, withHandlers } from 'recompose'
 import Sockets from '/src/services/Sockets/nativecore'
+import { initListeners } from '/src/services/Sockets'
 import Game from './containers/Game'
 import Menu from './containers/Menu'
 
@@ -14,6 +15,7 @@ const enhance = compose(
   withHandlers({
     handlePlay: ({ setGameState }) => () => {
       Sockets.init()
+      initListeners()
       setGameState(gameStates.GAME)
     },
   })

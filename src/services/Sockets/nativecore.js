@@ -1,12 +1,13 @@
-const WEBSOCKETS_PORT = 3001
+const WEBSOCKETS_PORT = 3000
 class Sockets {
   init() {
-    const socketUrl = `ws://localhost:${WEBSOCKETS_PORT}`
+    const socketUrl = `ws://172.20.17.231:${WEBSOCKETS_PORT}`
     console.log('Init websockets on endpoint: ', socketUrl)
     this.socket = new WebSocket(socketUrl)
     this.socket.onopen = () => {
       this.socket.send('Hello!')
     }
+
     this.socket.onerror = event => {
       console.log('Error occured', event)
       setTimeout(this.init, 2000)
@@ -14,7 +15,7 @@ class Sockets {
     this.socket.onclose = event => console.log('Connection closed', event)
   }
 
-  on(eventName, listener) {
+  onEvent(listener) {
     this.socket.onmessage = listener
   }
 

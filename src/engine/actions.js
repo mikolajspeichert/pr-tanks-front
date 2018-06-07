@@ -11,6 +11,12 @@ const actions = {
   PLAYER_UPDATE_TURRET: 'player/TURRET',
   PLAYER_SHOT: 'player/SHOT',
   INIT_OPPONENT: 'opponent/INIT',
+  OPPONENT_MOVEMENT: 'opponent/MOV',
+  OPPONENT_POS: 'opponent/POS',
+  OPPONENT_TURRET: 'opponent/TURRET',
+  OPPONENT_SHOT: 'opponent/SHOT',
+  HIT: 'HIT',
+  HIT_END: 'HIT_END',
 }
 
 const playerUpdatePosition = (x, y) => {

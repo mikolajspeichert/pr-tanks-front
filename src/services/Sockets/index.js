@@ -19,4 +19,18 @@ const emitShot = (posX, posY, dir) => {
   )
 }
 
-export { emitMovementChange, emitPositionChange, emitTurretAngleChange, emitShot }
+const listenOnMessage = message => {
+  console.log(message)
+}
+
+const initListeners = () => {
+  Sockets.onEvent(listenOnMessage)
+}
+
+export {
+  emitMovementChange,
+  emitPositionChange,
+  emitTurretAngleChange,
+  emitShot,
+  initListeners,
+}

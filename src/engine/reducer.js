@@ -14,6 +14,12 @@ const initialPlayer = fromJS({
   isFiring: false,
 })
 
+const initialBoom = fromJS({
+  isActive: false,
+  x: 0,
+  y: 0,
+})
+
 const initialOpponents = fromJS({
   '1': {
     movDir: 0,
@@ -63,9 +69,38 @@ const opponents = createReducer(initialOpponents, {
   [actions.INIT_OPPONENT](state, action) {
     return state.merge(fromJS({ [action.payload.id]: action.payload }))
   },
+  [actions.OPPONENT_MOVEMENT](state, { payload }) {
+    const { id, val, dir } = payload
+    return state.setIn([id, 'movDir'], dir).setIn([id, 'movVal'], val)
+  },
+  [actions.OPPONENT_POS](state, { payload }) {
+    const { id, x, y } = payload
+    return state.setIn([id, 'x'], x).setIn([id, 'y'], y)
+  },
+  [actions.OPPONENT_TURRET](state, { payload }) {
+    const { id, dir } = payload
+    return state.setIn([id, 'turretDir'], dir)
+  },
+  [actions.OPPONENT_SHOT](state, { payload }) {
+    const { id, value } = payload
+    return state.setIn([id, 'isFiring'], value)
+  },
 })
 
-export default combineReducers({ player, opponents })
+const boom = createReducer(initialBoom, {
+  [actions.HIT](state, { payload }) {
+    const { x, y } = payload
+    return state
+      .set('x', x)
+      .set('y', y)
+      .set('isActive', true)
+  },
+  [actions.HIT_END](state) {
+    return state.set('isActive', false)
+  },
+})
+
+export default combineReducers({ player, opponents, boom })
 
 // MIN X: 400
 // MIN Y: 430
