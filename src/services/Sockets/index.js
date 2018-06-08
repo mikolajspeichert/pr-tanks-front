@@ -22,7 +22,9 @@ const listenOnMessage = message => {
 
 const initSockets = onPrepared => {
   Sockets.init()
-  onPrepared()
+  setTimeout(() => {
+    onPrepared()
+  }, 1000)
 }
 
 const initListeners = () => {
