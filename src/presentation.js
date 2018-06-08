@@ -1,7 +1,6 @@
 import React from 'react'
 import { compose, withState, withHandlers } from 'recompose'
-import Sockets from '/src/services/Sockets/nativecore'
-import { initListeners } from '/src/services/Sockets'
+import { initListeners, initSockets } from '/src/services/Sockets'
 import Game from './containers/Game'
 import Waiting from './containers/Waiting'
 import Menu from './containers/Menu'
@@ -16,10 +15,9 @@ const enhance = compose(
   withState('gameState', 'setGameState', gameStates.MENU),
   withHandlers({
     handlePlay: ({ setGameState }) => () => {
-      Sockets.init(() => setGameState(gameStates.GAME))
+      initSockets(() => setGameState(gameStates.GAME))
       initListeners()
-      // setGameState(gameStates.WAITING_FOR_SERVER)
-      setGameState(gameStates.GAME)
+      setGameState(gameStates.WAITING_FOR_SERVER)
     },
   })
 )

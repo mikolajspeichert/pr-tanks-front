@@ -20,6 +20,11 @@ const listenOnMessage = message => {
   console.log(message)
 }
 
+const initSockets = onPrepared => {
+  Sockets.init()
+  onPrepared()
+}
+
 const initListeners = () => {
   Sockets.onEvent(listenOnMessage)
 }
@@ -30,4 +35,5 @@ export {
   emitTurretAngleChange,
   emitShot,
   initListeners,
+  initSockets,
 }
