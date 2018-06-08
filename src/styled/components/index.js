@@ -9,8 +9,8 @@ const Cursor = styled.div.attrs({
 })`
   background: url(${cursor});
   cursor: none;
-  top: 50%;
-  left: 50%;
+  position: absolute;
+  z-index: 100;
   width: 30px;
   height: 30px;
 `

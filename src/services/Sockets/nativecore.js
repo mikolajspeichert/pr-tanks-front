@@ -1,7 +1,7 @@
 const WEBSOCKETS_PORT = 3000
 class Sockets {
   init() {
-    const socketUrl = `ws://172.20.17.231:${WEBSOCKETS_PORT}`
+    const socketUrl = `ws://169.254.189.208:${WEBSOCKETS_PORT}`
     console.log('Init websockets on endpoint: ', socketUrl)
     this.socket = new WebSocket(socketUrl)
     this.socket.onopen = () => {
@@ -21,6 +21,7 @@ class Sockets {
 
   emit(eventName, data) {
     if (this.socket.readyState === this.socket.OPEN) {
+      console.log('emitting')
       this.socket.send(data)
     }
   }

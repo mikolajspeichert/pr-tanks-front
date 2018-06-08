@@ -27,6 +27,7 @@ import {
 } from '/src/engine/selectors'
 import Map from '../Map/index'
 import Tank from './components/Tank'
+import LeftPanel from './components/LeftPanel'
 
 const enhance = compose(
   getContext({ loop: PropTypes.object, scale: PropTypes.number }),
@@ -58,13 +59,20 @@ const enhance = compose(
       shot,
       shoot,
     }) => () => {
-      if (keys.isDown(keys.UP) && val < 3.0) {
+      if (keys.isDown(keys.SPACE)) {
+        if (val > 0.3) {
+          dispatch(playerUpdateMovement(dir, val - 0.3))
+        } else if (val < -0.3) {
+          dispatch(playerUpdateMovement(dir, val + 0.3))
+        } else {
+          dispatch(playerUpdateMovement(dir, 0.0))
+        }
+      } else if (keys.isDown(keys.UP) && val < 3.0) {
         dispatch(playerUpdateMovement(dir, val + 0.1))
-      } else if (keys.isDown(keys.DOWN) && val > 0.0) {
+      } else if (keys.isDown(keys.DOWN) && val > -3.0) {
         dispatch(playerUpdateMovement(dir, val - 0.1))
-      } else if (val < 0.0) {
-        dispatch(playerUpdateMovement(dir, 0))
       }
+
       if (keys.isDown(keys.LEFT)) {
         dispatch(playerUpdateMovement(dir - 2 < 0 ? 358 : dir - 2, val))
       } else if (keys.isDown(keys.RIGHT)) {
@@ -133,6 +141,7 @@ const enhance = compose(
 
 const Game = enhance(({ mouseX, mouseY, handleShot, shot, opponents }) => (
   <World>
+    <LeftPanel health={100} />
     <Map />
     <Tank shot={shot !== 0} />
     {opponents.map(opponent => <Tank key={opponent} id={opponent} opponent />)}
