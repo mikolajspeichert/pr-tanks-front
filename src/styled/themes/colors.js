@@ -5,4 +5,5 @@ export default {
   yellowLight: '#FFEA78',
   red: '#FF1919',
   gray: '#979797',
+  grayLight: '#D8D8D8',
 }

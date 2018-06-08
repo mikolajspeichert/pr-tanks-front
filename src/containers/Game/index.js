@@ -28,6 +28,7 @@ import {
 import Map from '../Map/index'
 import Tank from './components/Tank'
 import LeftPanel from './components/LeftPanel'
+import RightPanel from './components/RightPanel'
 
 const enhance = compose(
   getContext({ loop: PropTypes.object, scale: PropTypes.number }),
@@ -67,15 +68,15 @@ const enhance = compose(
         } else {
           dispatch(playerUpdateMovement(dir, 0.0))
         }
-      } else if (keys.isDown(keys.UP) && val < 3.0) {
+      } else if (keys.isDown(87) && val < 3.0) {
         dispatch(playerUpdateMovement(dir, val + 0.1))
-      } else if (keys.isDown(keys.DOWN) && val > -3.0) {
+      } else if (keys.isDown(83) && val > -3.0) {
         dispatch(playerUpdateMovement(dir, val - 0.1))
       }
 
-      if (keys.isDown(keys.LEFT)) {
+      if (keys.isDown(65)) {
         dispatch(playerUpdateMovement(dir - 2 < 0 ? 358 : dir - 2, val))
-      } else if (keys.isDown(keys.RIGHT)) {
+      } else if (keys.isDown(68)) {
         dispatch(playerUpdateMovement(dir + 2 > 360 ? 2 : dir + 2, val))
       }
       let turretTargetAngle = Math.round(
@@ -123,10 +124,10 @@ const enhance = compose(
     componentDidMount() {
       const { keyListener, loop, update } = this.props
       keyListener.subscribe([
-        keyListener.LEFT,
-        keyListener.RIGHT,
-        keyListener.UP,
-        keyListener.DOWN,
+        65,
+        68,
+        87,
+        83,
         keyListener.SPACE,
       ])
       loop.subscribe(update)
@@ -141,7 +142,8 @@ const enhance = compose(
 
 const Game = enhance(({ mouseX, mouseY, handleShot, shot, opponents }) => (
   <World>
-    <LeftPanel health={100} />
+    <LeftPanel />
+    <RightPanel />
     <Map />
     <Tank shot={shot !== 0} />
     {opponents.map(opponent => <Tank key={opponent} id={opponent} opponent />)}

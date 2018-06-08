@@ -10,7 +10,7 @@ const initialPlayer = fromJS({
   turretDir: 0,
   x: 3190,
   y: 2540,
-  health: 100,
+  health: 96,
   isFiring: false,
 })
 
@@ -27,7 +27,7 @@ const initialOpponents = fromJS({
     turretDir: 0,
     x: 3100,
     y: 2540,
-    health: 100,
+    health: 30,
     isFiring: false,
   },
   '2': {
@@ -36,7 +36,7 @@ const initialOpponents = fromJS({
     turretDir: 0,
     x: 3100,
     y: 2340,
-    health: 100,
+    health: 70,
     isFiring: false,
   },
   '3': {

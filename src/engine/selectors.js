@@ -11,6 +11,14 @@ const opponentsSelector = state => state.get('opponents')
 
 const opponentSelector = (state, id) => state.getIn(['opponents', id])
 
+const playerHealthSelector = createSelector(playerSelector, player =>
+  player.get('health')
+)
+
+const opponentHealthSelector = createSelector(opponentSelector, opponent =>
+  opponent.get('health')
+)
+
 const playerPositionSelector = createSelector(playerSelector, player => ({
   x: player.get('x'),
   y: player.get('y'),
@@ -21,9 +29,9 @@ const opponentPositionSelector = createSelector(opponentSelector, player => ({
   y: player.get('y'),
 }))
 
-const opponentsIdsSelector = createSelector(opponentsSelector, opponents =>
-  [...opponents.keys()]
-)
+const opponentsIdsSelector = createSelector(opponentsSelector, opponents => [
+  ...opponents.keys(),
+])
 
 const playerMovementSelector = createSelector(playerSelector, player => ({
   x: player.get('x'),
@@ -47,6 +55,11 @@ const playerDisplaySelector = createSelector(
   }
 )
 
+const playerAngleSelector = createSelector(playerSelector, player => ({
+  hullDeg: player.get('movDir'),
+  turretDeg: player.get('turretDir'),
+}))
+
 const opponentDisplaySelector = createSelector(
   opponentPositionSelector,
   playerPositionSelector,
@@ -59,11 +72,6 @@ const opponentDisplaySelector = createSelector(
     return { x: playerDisp.x - a, y: playerDisp.y - b }
   }
 )
-
-const playerAngleSelector = createSelector(playerSelector, player => ({
-  hullDeg: player.get('movDir'),
-  turretDeg: player.get('turretDir'),
-}))
 
 const opponentAngleSelector = createSelector(opponentSelector, player => ({
   hullDeg: player.get('movDir'),
@@ -81,4 +89,6 @@ export {
   playerDisplaySelector,
   playerMovementSelector,
   playerAngleSelector,
+  playerHealthSelector,
+  opponentHealthSelector,
 }
