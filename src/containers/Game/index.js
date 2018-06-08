@@ -8,7 +8,6 @@ import {
   withProps,
 } from 'recompose'
 import CursorProvider from 'react-cursor-position'
-import Matter from 'matter-js'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Loop, Stage, World, KeyListener } from 'react-game-kit'
@@ -24,11 +23,13 @@ import {
   playerDisplaySelector,
   playerAngleSelector,
   opponentsIdsSelector,
+  opponentsPositionsSelector,
 } from '/src/engine/selectors'
 import Map from '../Map/index'
 import Tank from './components/Tank'
 import LeftPanel from './components/LeftPanel'
 import RightPanel from './components/RightPanel'
+import { checkForCollisions } from './helpers'
 
 const enhance = compose(
   getContext({ loop: PropTypes.object, scale: PropTypes.number }),
@@ -41,6 +42,7 @@ const enhance = compose(
     display: playerDisplaySelector(state),
     turret: playerAngleSelector(state).turretDeg,
     opponents: opponentsIdsSelector(state),
+    opponentsPositions: opponentsPositionsSelector(state),
   })),
   withState('keyListener', 'setKeyListener', new KeyListener()),
   withState('shot', 'shoot', 0),
@@ -59,12 +61,13 @@ const enhance = compose(
       scale,
       shot,
       shoot,
+      opponentsPositions,
     }) => () => {
       if (keys.isDown(keys.SPACE)) {
-        if (val > 0.3) {
-          dispatch(playerUpdateMovement(dir, val - 0.3))
-        } else if (val < -0.3) {
-          dispatch(playerUpdateMovement(dir, val + 0.3))
+        if (val > 0.2) {
+          dispatch(playerUpdateMovement(dir, val - 0.2))
+        } else if (val < -0.2) {
+          dispatch(playerUpdateMovement(dir, val + 0.2))
         } else {
           dispatch(playerUpdateMovement(dir, 0.0))
         }
@@ -73,7 +76,6 @@ const enhance = compose(
       } else if (keys.isDown(83) && val > -3.0) {
         dispatch(playerUpdateMovement(dir, val - 0.1))
       }
-
       if (keys.isDown(65)) {
         dispatch(playerUpdateMovement(dir - 2 < 0 ? 358 : dir - 2, val))
       } else if (keys.isDown(68)) {
@@ -109,7 +111,18 @@ const enhance = compose(
       let angle = dir * Math.PI / 180.0 + Math.PI / 2
       let newx = x - Math.cos(angle) * val
       let newy = y - Math.sin(angle) * val
-      if (newx !== x || newy !== y) dispatch(playerUpdatePosition(newx, newy))
+      const params = {
+        x: newx,
+        y: newy,
+        oldx: x,
+        oldy: y,
+        opponents: opponentsPositions,
+      }
+      if (newx !== x || newy !== y)
+        checkForCollisions(params, (a, b) =>
+          dispatch(playerUpdatePosition(a, b))
+        )
+
       if (shot > 0) {
         if (shot + 1 > 10) shoot(0)
         else shoot(shot + 1)
@@ -123,13 +136,7 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {
       const { keyListener, loop, update } = this.props
-      keyListener.subscribe([
-        65,
-        68,
-        87,
-        83,
-        keyListener.SPACE,
-      ])
+      keyListener.subscribe([65, 68, 87, 83, keyListener.SPACE])
       loop.subscribe(update)
     },
     componentWillUnmount() {

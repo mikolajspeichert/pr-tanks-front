@@ -1,7 +1,8 @@
 const WEBSOCKETS_PORT = 3000
+const HOST = 'localhost'
 class Sockets {
   init() {
-    const socketUrl = `ws://169.254.189.208:${WEBSOCKETS_PORT}`
+    const socketUrl = `ws://${HOST}:${WEBSOCKETS_PORT}`
     console.log('Init websockets on endpoint: ', socketUrl)
     this.socket = new WebSocket(socketUrl)
     this.socket.onopen = () => {

@@ -33,6 +33,19 @@ const opponentsIdsSelector = createSelector(opponentsSelector, opponents => [
   ...opponents.keys(),
 ])
 
+const opponentsPositionsSelector = createSelector(
+  opponentsSelector,
+  opponents =>
+    opponents.reduce((acc, opp) => {
+      acc.push({
+        x: opp.get('x'),
+        y: opp.get('y'),
+      })
+      return acc
+    }, [])
+
+)
+
 const playerMovementSelector = createSelector(playerSelector, player => ({
   x: player.get('x'),
   y: player.get('y'),
@@ -91,4 +104,5 @@ export {
   playerAngleSelector,
   playerHealthSelector,
   opponentHealthSelector,
+  opponentsPositionsSelector,
 }
