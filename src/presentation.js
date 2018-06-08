@@ -3,19 +3,22 @@ import { compose, withState, withHandlers } from 'recompose'
 import Sockets from '/src/services/Sockets/nativecore'
 import { initListeners } from '/src/services/Sockets'
 import Game from './containers/Game'
+import Waiting from './containers/Waiting'
 import Menu from './containers/Menu'
 
 const gameStates = {
   MENU: 1,
   GAME: 2,
+  WAITING_FOR_SERVER: 3,
 }
 
 const enhance = compose(
   withState('gameState', 'setGameState', gameStates.MENU),
   withHandlers({
     handlePlay: ({ setGameState }) => () => {
-      Sockets.init()
+      Sockets.init(() => setGameState(gameStates.GAME))
       initListeners()
+      // setGameState(gameStates.WAITING_FOR_SERVER)
       setGameState(gameStates.GAME)
     },
   })
@@ -25,6 +28,8 @@ const Presentation = enhance(({ gameState, handlePlay }) => {
   switch (gameState) {
     case gameStates.MENU:
       return <Menu onPlay={handlePlay} />
+    case gameStates.WAITING_FOR_SERVER:
+      return <Waiting />
     case gameStates.GAME:
       return <Game />
     default:

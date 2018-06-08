@@ -20,9 +20,8 @@ class Sockets {
     this.socket.onmessage = listener
   }
 
-  emit(eventName, data) {
+  emit(data) {
     if (this.socket.readyState === this.socket.OPEN) {
-      console.log('emitting')
       this.socket.send(data)
     }
   }

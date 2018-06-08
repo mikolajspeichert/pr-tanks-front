@@ -9,8 +9,6 @@ const checkForWaterCollisions = params => {
 
 const checkForPlayersCollisions = params => {
   let { x, y, opponents } = params
-  console.log(opponents)
-  console.log(x, y)
   opponents.forEach(opp => {
     if (x < opp.x + 50 && x > opp.x - 50 && y < opp.y + 50 && y > opp.y - 50) {
       if (x < opp.x + 50 && x > opp.x + 40) params.x = opp.x + 50

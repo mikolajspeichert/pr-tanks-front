@@ -5,12 +5,12 @@ import { actions } from './actions'
 
 const initialPlayer = fromJS({
   id: 0,
-  movDir: 0,
+  movDir: 225,
   movVal: 0.0,
-  turretDir: 0,
+  turretDir: 225,
   x: 3190,
-  y: 2540,
-  health: 96,
+  y: 430,
+  health: 100,
   isFiring: false,
 })
 
