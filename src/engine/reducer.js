@@ -5,7 +5,7 @@ import { actions } from './actions'
 
 const initialPlayer = fromJS({
   id: 0,
-  movDir: 225,
+  hullDir: 225,
   movVal: 0.0,
   turretDir: 225,
   x: 3190,
@@ -22,29 +22,29 @@ const initialBoom = fromJS({
 
 const initialOpponents = fromJS({
   '1': {
-    movDir: 0,
+    hullDir: 0,
     movVal: 0.0,
     turretDir: 0,
-    x: 3100,
-    y: 2540,
-    health: 30,
+    x: 0,
+    y: 0,
+    health: 100,
     isFiring: false,
   },
   '2': {
-    movDir: 0,
+    hullDir: 0,
     movVal: 0.0,
     turretDir: 0,
-    x: 3100,
-    y: 2340,
-    health: 70,
+    x: 0,
+    y: 0,
+    health: 100,
     isFiring: false,
   },
   '3': {
-    movDir: 0,
+    hullDir: 0,
     movVal: 0.0,
     turretDir: 0,
-    x: 3000,
-    y: 2540,
+    x: 0,
+    y: 0,
     health: 100,
     isFiring: false,
   },
@@ -52,10 +52,10 @@ const initialOpponents = fromJS({
 
 const player = createReducer(initialPlayer, {
   [actions.INIT_PLAYER](state, action) {
-    return action.payload
+    return state.merge(action.payload)
   },
   [actions.PLAYER_UPDATE_MOV](state, { payload }) {
-    return state.set('movDir', payload.dir).set('movVal', payload.val)
+    return state.set('hullDir', payload.dir).set('movVal', payload.val)
   },
   [actions.PLAYER_UPDATE_POS](state, { payload }) {
     return state.set('x', payload.x).set('y', payload.y)
@@ -71,7 +71,7 @@ const opponents = createReducer(initialOpponents, {
   },
   [actions.OPPONENT_MOVEMENT](state, { payload }) {
     const { id, val, dir } = payload
-    return state.setIn([id, 'movDir'], dir).setIn([id, 'movVal'], val)
+    return state.setIn([id, 'hullDir'], dir).setIn([id, 'movVal'], val)
   },
   [actions.OPPONENT_POS](state, { payload }) {
     const { id, x, y } = payload
@@ -110,7 +110,7 @@ export default combineReducers({ player, opponents, boom })
 // {
 //    player: {
 //      id: 1,
-//      movDir: 114 *deg*
+//      hullDir: 114 *deg*
 //      movVal: 2.3 *range 0:3*
 //      posX: 40,
 //      posY: 104,

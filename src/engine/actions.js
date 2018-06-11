@@ -51,9 +51,44 @@ const playerUpdateTurretAngle = dir => {
   }
 }
 
+const playerInit = payload => ({
+  type: actions.INIT_PLAYER,
+  payload,
+})
+
+const opponentUpdatePosition = (id, x, y) => ({
+  type: actions.OPPONENT_POS,
+  payload: {
+    id,
+    x,
+    y,
+  },
+})
+
+const opponentUpdateMovement = (id, dir, val) => ({
+  type: actions.OPPONENT_MOVEMENT,
+  payload: {
+    id,
+    dir,
+    val,
+  },
+})
+
+const opponentUpdateTurretAngle = (id, dir) => ({
+  type: actions.OPPONENT_TURRET,
+  payload: {
+    id,
+    dir,
+  },
+})
+
 export {
   actions,
+  playerInit,
   playerUpdatePosition,
   playerUpdateMovement,
   playerUpdateTurretAngle,
+  opponentUpdateMovement,
+  opponentUpdatePosition,
+  opponentUpdateTurretAngle,
 }

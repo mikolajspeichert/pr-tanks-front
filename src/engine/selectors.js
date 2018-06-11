@@ -43,13 +43,12 @@ const opponentsPositionsSelector = createSelector(
       })
       return acc
     }, [])
-
 )
 
 const playerMovementSelector = createSelector(playerSelector, player => ({
   x: player.get('x'),
   y: player.get('y'),
-  dir: player.get('movDir'),
+  dir: player.get('hullDir'),
   val: player.get('movVal'),
 }))
 
@@ -69,7 +68,7 @@ const playerDisplaySelector = createSelector(
 )
 
 const playerAngleSelector = createSelector(playerSelector, player => ({
-  hullDeg: player.get('movDir'),
+  hullDeg: player.get('hullDir'),
   turretDeg: player.get('turretDir'),
 }))
 
@@ -87,7 +86,7 @@ const opponentDisplaySelector = createSelector(
 )
 
 const opponentAngleSelector = createSelector(opponentSelector, player => ({
-  hullDeg: player.get('movDir'),
+  hullDeg: player.get('hullDir'),
   turretDeg: player.get('turretDir'),
   shot: player.get('isFiring'),
 }))

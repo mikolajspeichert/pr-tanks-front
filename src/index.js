@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 import '/src/styled/utils/global-style'
-import createStore from '/src/engine/store'
+import store from '/src/engine/store'
 
 import Presentation from './presentation'
 
@@ -12,8 +12,6 @@ class App extends React.Component {
     return <Presentation />
   }
 }
-
-const store = createStore()
 
 ReactDOM.render(
   <Provider store={store}>

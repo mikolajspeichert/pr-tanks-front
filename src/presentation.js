@@ -15,8 +15,8 @@ const enhance = compose(
   withState('gameState', 'setGameState', gameStates.MENU),
   withHandlers({
     handlePlay: ({ setGameState }) => () => {
-      initSockets(() => setGameState(gameStates.GAME))
-      initListeners()
+      initSockets()
+      initListeners(() => setGameState(gameStates.GAME))
       setGameState(gameStates.WAITING_FOR_SERVER)
     },
   })
