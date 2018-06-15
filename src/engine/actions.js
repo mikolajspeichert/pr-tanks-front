@@ -17,6 +17,7 @@ const actions = {
   OPPONENT_SHOT: 'opponent/SHOT',
   HIT: 'HIT',
   HIT_END: 'HIT_END',
+  SETTINGS_HOST: 'settings/HOST',
 }
 
 const playerUpdatePosition = (x, y) => {
@@ -82,9 +83,18 @@ const opponentUpdateTurretAngle = (id, dir) => ({
   },
 })
 
+const changeHost = (host, port) => ({
+  type: actions.SETTINGS_HOST,
+  payload: {
+    host,
+    port,
+  },
+})
+
 export {
   actions,
   playerInit,
+  changeHost,
   playerUpdatePosition,
   playerUpdateMovement,
   playerUpdateTurretAngle,

@@ -50,8 +50,8 @@ const listenOnEvents = ({ data }) => {
   }
 }
 
-const initSockets = () => {
-  Sockets.init()
+const initSockets = (host, port) => {
+  Sockets.init(host, port)
 }
 
 const initListeners = onPrepared => {

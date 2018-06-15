@@ -11,6 +11,11 @@ const opponentsSelector = state => state.get('opponents')
 
 const opponentSelector = (state, id) => state.getIn(['opponents', id])
 
+const hostSelector = state => ({
+  host: state.getIn(['settings', 'host']),
+  port: state.getIn(['settings', 'port']),
+})
+
 const playerHealthSelector = createSelector(playerSelector, player =>
   player.get('health')
 )
@@ -104,4 +109,5 @@ export {
   playerHealthSelector,
   opponentHealthSelector,
   opponentsPositionsSelector,
+  hostSelector,
 }

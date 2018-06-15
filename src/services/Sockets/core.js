@@ -1,8 +1,11 @@
-const WEBSOCKETS_PORT = 3000
-const HOST = '25.68.227.122'
 class Sockets {
-  init(port = WEBSOCKETS_PORT) {
-    const socketUrl = `ws://${HOST}:${port}`
+  host = ''
+  port = 3000
+
+  init(host, port) {
+    this.host = host
+    this.port = port
+    const socketUrl = `ws://${this.host}:${this.port}`
     console.log('Init websockets on endpoint: ', socketUrl)
     this.socket = new WebSocket(socketUrl)
     this.socket.onopen = () => {
@@ -18,7 +21,7 @@ class Sockets {
 
   initWithPort(port) {
     this.socket.close()
-    this.init(port)
+    this.init(this.host, port)
   }
 
   onEvent(listener) {

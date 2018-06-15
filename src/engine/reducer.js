@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux-immutable'
 import { createReducer } from 'redux-create-reducer'
 import { fromJS } from 'immutable'
+import { save, get, keys } from '/src/services/storage'
 import { actions } from './actions'
 
 const initialPlayer = fromJS({
@@ -49,6 +50,15 @@ const initialOpponents = fromJS({
     isFiring: false,
   },
 })
+
+const createInitialSettings = () => {
+  const host = get(keys.host) || 'localhost'
+  const port = get(keys.port) || '3000'
+  return fromJS({
+    host,
+    port,
+  })
+}
 
 const player = createReducer(initialPlayer, {
   [actions.INIT_PLAYER](state, action) {
@@ -100,7 +110,15 @@ const boom = createReducer(initialBoom, {
   },
 })
 
-export default combineReducers({ player, opponents, boom })
+const settings = createReducer(createInitialSettings(), {
+  [actions.SETTINGS_HOST](state, { payload }) {
+    save(keys.host, payload.host)
+    save(keys.port, payload.port)
+    return state.merge({ ...payload })
+  },
+})
+
+export default combineReducers({ player, opponents, boom, settings })
 
 // MIN X: 400
 // MIN Y: 430

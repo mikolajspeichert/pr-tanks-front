@@ -1,6 +1,9 @@
 import React from 'react'
 import { compose, withState, withHandlers } from 'recompose'
+import { connect } from 'react-redux'
+
 import { initListeners, initSockets } from '/src/services/Sockets'
+import { hostSelector } from '/src/engine/selectors'
 import Game from './containers/Game'
 import Waiting from './containers/Waiting'
 import Menu from './containers/Menu'
@@ -12,10 +15,11 @@ const gameStates = {
 }
 
 const enhance = compose(
+  connect(state => ({ ...hostSelector(state) })),
   withState('gameState', 'setGameState', gameStates.MENU),
   withHandlers({
-    handlePlay: ({ setGameState }) => () => {
-      initSockets()
+    handlePlay: ({ setGameState, host, port }) => () => {
+      initSockets(host, port)
       initListeners(() => setGameState(gameStates.GAME))
       setGameState(gameStates.WAITING_FOR_SERVER)
     },

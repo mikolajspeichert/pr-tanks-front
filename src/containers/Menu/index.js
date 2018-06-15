@@ -1,15 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { compose, withState, withHandlers } from 'recompose'
+import { connect } from 'react-redux'
 
+import { hostSelector } from '/src/engine/selectors'
+import { changeHost } from '/src/engine/actions'
 import { MenuItem, MenuContainer, MenuTitle } from './styles'
+import HostForm from './components/HostForm'
 
 const enhance = compose(
+  connect(state => ({ ...hostSelector(state) })),
   withState('showingSettings', 'setSettings', false),
   withState('fullscreen', 'setFullscreen', 'off'),
   withHandlers({
-    onSettings: ({ setSettings, showingSettings }) => () =>
-      setSettings(!showingSettings),
+    onChangeHost: ({ setSettings, showingSettings, dispatch }) => (
+      host,
+      port
+    ) => {
+      dispatch(changeHost(host, port))
+      setSettings(!showingSettings)
+    },
+    onSettings: ({ setSettings }) => () => setSettings(true),
     onFullscreen: ({ fullscreen, setFullscreen }) => () => {
       if (fullscreen === 'off') {
         document.getElementById('root').webkitRequestFullScreen &&
@@ -23,14 +34,23 @@ const enhance = compose(
   })
 )
 const Menu = enhance(
-  ({ onPlay, onSettings, showingSettings, fullscreen, onFullscreen }) => {
+  ({
+    onPlay,
+    onSettings,
+    showingSettings,
+    fullscreen,
+    onFullscreen,
+    host,
+    port,
+    onChangeHost,
+  }) => {
     let content
     if (showingSettings) {
       content = (
         <MenuContainer>
           <MenuTitle>Settings</MenuTitle>
           <MenuItem onClick={onFullscreen}>Fullscreen: {fullscreen}</MenuItem>
-          <MenuItem onClick={onSettings}>Back</MenuItem>
+          <HostForm host={host} port={port} onChangeHost={onChangeHost} />
         </MenuContainer>
       )
     } else {
