@@ -19,6 +19,7 @@ const initialBoom = fromJS({
   isActive: false,
   x: 0,
   y: 0,
+  deg: 0,
 })
 
 const initialOpponents = fromJS({

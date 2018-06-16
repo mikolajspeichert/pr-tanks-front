@@ -29,6 +29,7 @@ import Map from '../Map/index'
 import Tank from './components/Tank'
 import LeftPanel from './components/LeftPanel'
 import RightPanel from './components/RightPanel'
+import Boom from './components/Boom'
 import { checkForCollisions } from './helpers'
 
 const enhance = compose(
@@ -155,6 +156,7 @@ const Game = enhance(({ mouseX, mouseY, handleShot, shot, opponents }) => (
     <Tank shot={shot !== 0} />
     {opponents.map(opponent => <Tank key={opponent} id={opponent} opponent />)}
     <Cursor mouseX={mouseX} mouseY={mouseY} onClick={handleShot} />
+    <Boom />
   </World>
 ))
 

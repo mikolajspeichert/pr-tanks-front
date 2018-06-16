@@ -9,6 +9,8 @@ const playerIdSelector = state => state.getIn(['player', 'id'])
 
 const opponentsSelector = state => state.get('opponents')
 
+const boomSelector = state => state.get('boom')
+
 const opponentSelector = (state, id) => state.getIn(['opponents', id])
 
 const hostSelector = state => ({
@@ -100,6 +102,7 @@ export {
   playerPositionSelector,
   playerSelector,
   playerIdSelector,
+  boomSelector,
   opponentsIdsSelector,
   opponentAngleSelector,
   opponentDisplaySelector,

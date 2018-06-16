@@ -91,8 +91,14 @@ const changeHost = (host, port) => ({
   },
 })
 
+const boom = (x, y) => ({
+  type: actions.HIT,
+  payload: { x, y, deg: Math.floor(Math.random() * 360) },
+})
+
 export {
   actions,
+  boom,
   playerInit,
   changeHost,
   playerUpdatePosition,

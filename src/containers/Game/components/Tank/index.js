@@ -11,7 +11,6 @@ import {
   playerIdSelector,
   opponentHealthSelector,
 } from '/src/engine/selectors'
-import { Body } from 'react-game-kit'
 import { Wrapper, Hull, Turret, HealthBar, Bar } from './styles'
 
 const colors = ['green', 'red', 'gray', 'yellow']
@@ -72,19 +71,17 @@ const enhance = compose(
 const Tank = enhance(
   ({ x, y, color, scale, hullDeg, turretDeg, shot, health }) => (
     <Wrapper x={x} y={y}>
-      <Body args={[x, y, 100 * scale, 100 * scale]}>
-        {health && (
-          <HealthBar scale={scale}>
-            <Bar scale={scale} health={health} />
-          </HealthBar>
-        )}
-        <Hull url={hull[color]} scale={scale} deg={hullDeg} />
-        <Turret
-          url={shot ? turretFiring[color] : turret[color]}
-          scale={scale}
-          deg={turretDeg}
-        />
-      </Body>
+      {health && (
+        <HealthBar scale={scale}>
+          <Bar scale={scale} health={health} />
+        </HealthBar>
+      )}
+      <Hull url={hull[color]} scale={scale} deg={hullDeg} />
+      <Turret
+        url={shot ? turretFiring[color] : turret[color]}
+        scale={scale}
+        deg={turretDeg}
+      />
     </Wrapper>
   )
 )
