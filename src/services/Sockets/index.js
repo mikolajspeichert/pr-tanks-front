@@ -34,10 +34,28 @@ const listenOnEvents = ({ data }) => {
   const pairs = data.split(',')
   const id = pairs[0].split('')[1]
   switch (data.charAt(0)) {
-    case 'p':
+    case 'p': {
+      const internalPairs = pairs[1].split(',')
+      store.dispatch(
+        opponentUpdatePosition(
+          id,
+          parseFloat(internalPairs[0]),
+          parseFloat(internalPairs[1])
+        )
+      )
       break
-    case 'm':
+    }
+    case 'm': {
+      const internalPairs = pairs[1].split(',')
+      store.dispatch(
+        opponentUpdateMovement(
+          id,
+          parseFloat(internalPairs[0]),
+          parseFloat(internalPairs[1])
+        )
+      )
       break
+    }
     case 't':
       store.dispatch(opponentUpdateTurretAngle(id, parseFloat(pairs[1])))
       break
