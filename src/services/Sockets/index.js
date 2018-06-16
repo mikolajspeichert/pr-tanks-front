@@ -14,11 +14,11 @@ const getIntValue = string => parseInt(string.split(':')[1], 10)
 const getFloatValue = string => parseFloat(string.split(':')[1])
 
 const emitPositionChange = (x, y) => {
-  Sockets.emit(`p,${x.toFixed(2)};${y.toFixed(2)}`)
+  Sockets.emit(`p,${x.toFixed(2)},${y.toFixed(2)}`)
 }
 
 const emitMovementChange = (dir, val) => {
-  Sockets.emit(`m,${dir.toFixed(2)};${val.toFixed(2)}`)
+  Sockets.emit(`m,${dir.toFixed(2)},${val.toFixed(2)}`)
 }
 
 const emitTurretAngleChange = angle => {
@@ -26,7 +26,7 @@ const emitTurretAngleChange = angle => {
 }
 
 const emitShot = (posX, posY, dir) => {
-  Sockets.emit(`s,${posX.toFixed(2)};${posY.toFixed(2)};${dir.toFixed(2)}`)
+  Sockets.emit(`s,${posX.toFixed(2)},${posY.toFixed(2)},${dir.toFixed(2)}`)
 }
 
 const listenOnEvents = ({ data }) => {
