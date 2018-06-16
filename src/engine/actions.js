@@ -96,11 +96,23 @@ const boom = (x, y) => ({
   payload: { x, y, deg: Math.floor(Math.random() * 360) },
 })
 
+const shotMade = id => ({
+  type: actions.OPPONENT_SHOT,
+  payload: { id, value: true },
+})
+
+const shotEnd = id => ({
+  type: actions.OPPONENT_SHOT,
+  payload: { id, value: false },
+})
+
 export {
   actions,
   boom,
   playerInit,
   changeHost,
+  shotMade,
+  shotEnd,
   playerUpdatePosition,
   playerUpdateMovement,
   playerUpdateTurretAngle,

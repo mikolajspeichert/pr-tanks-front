@@ -77,9 +77,12 @@ const enhance = compose(
       } else if (keys.isDown(83) && val > -3.0) {
         dispatch(playerUpdateMovement(dir, val - 0.1))
       }
+      let degDiff = 0
       if (keys.isDown(65)) {
+        degDiff = -2
         dispatch(playerUpdateMovement(dir - 2 < 0 ? 358 : dir - 2, val))
       } else if (keys.isDown(68)) {
+        degDiff = 2
         dispatch(playerUpdateMovement(dir + 2 > 360 ? 2 : dir + 2, val))
       }
       let turretTargetAngle = Math.round(
@@ -99,12 +102,14 @@ const enhance = compose(
             Math.abs(turret + 1 - turretTargetAngle) < 1
               ? turretTargetAngle
               : turret + 1
+          res += degDiff
           if (res > 360) res = 0
         } else {
           res =
             Math.abs(turret + 1 - turretTargetAngle) < 1
               ? turretTargetAngle
               : turret - 1
+          res += degDiff
           if (res < 0) res = 360
         }
         dispatch(playerUpdateTurretAngle(res))

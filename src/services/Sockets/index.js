@@ -1,11 +1,11 @@
-import _ from 'lodash'
-
 import store from '/src/engine/store'
 import {
   playerInit,
   opponentUpdateTurretAngle,
   opponentUpdatePosition,
   opponentUpdateMovement,
+  shotMade,
+  shotEnd,
 } from '/src/engine/actions'
 
 import Sockets from './core'
@@ -30,7 +30,6 @@ const emitShot = (posX, posY, dir) => {
 }
 
 const listenOnEvents = ({ data }) => {
-  console.log(data)
   const pairs = data.split(',')
   const id = pairs[0].split('')[1]
   switch (data.charAt(0)) {
@@ -50,6 +49,8 @@ const listenOnEvents = ({ data }) => {
       store.dispatch(opponentUpdateTurretAngle(id, parseFloat(pairs[1])))
       break
     case 's':
+      store.dispatch(shotMade(id))
+      setTimeout(() => shotEnd(id), 100)
       break
     case 'o':
       break
