@@ -35,24 +35,14 @@ const listenOnEvents = ({ data }) => {
   const id = pairs[0].split('')[1]
   switch (data.charAt(0)) {
     case 'p': {
-      const internalPairs = pairs[1].split(',')
       store.dispatch(
-        opponentUpdatePosition(
-          id,
-          parseFloat(internalPairs[0]),
-          parseFloat(internalPairs[1])
-        )
+        opponentUpdatePosition(id, parseFloat(pairs[1]), parseFloat(pairs[2]))
       )
       break
     }
     case 'm': {
-      const internalPairs = pairs[1].split(',')
       store.dispatch(
-        opponentUpdateMovement(
-          id,
-          parseFloat(internalPairs[0]),
-          parseFloat(internalPairs[1])
-        )
+        opponentUpdateMovement(id, parseFloat(pairs[1]), parseFloat(pairs[2]))
       )
       break
     }
