@@ -1,5 +1,5 @@
 import React from 'react'
-import { compose, getContext } from 'recompose'
+import { compose, getContext, withProps } from 'recompose'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -12,6 +12,11 @@ const enhance = compose(
   connect(state => {
     const health = playerHealthSelector(state)
     return { health }
+  }),
+  withProps(({ health, dispatch }) => {
+    if(health < 0){
+      console.log('dead')
+    }
   })
 )
 const LeftPanel = enhance(({ scale, health }) => (

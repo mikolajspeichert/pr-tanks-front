@@ -7,6 +7,8 @@ import {
   opponentUpdate,
   shotMade,
   shotEnd,
+  boom,
+  boomEnd,
 } from '/src/engine/actions'
 
 import Sockets from './core'
@@ -67,8 +69,13 @@ const listenOnEvents = ({ data }) => {
       )
       break
     }
-    case 'o':
+    case 'b': {
+      store.dispatch(boom(id, parseFloat(pairs[1]), parseFloat(pairs[2])))
+      setTimeout(() => {
+        store.dispatch(boomEnd())
+      }, 500)
       break
+    }
     default:
       break
   }

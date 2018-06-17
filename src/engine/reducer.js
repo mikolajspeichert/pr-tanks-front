@@ -84,6 +84,15 @@ const player = createReducer(initialPlayer, {
   [actions.PLAYER_UPDATE_TURRET](state, { payload }) {
     return state.set('turretDir', payload.dir)
   },
+  [actions.HIT](state, { payload }) {
+    const { id } = payload
+    const myId = state.get('id')
+    const health = state.get('health')
+    if (myId === id) {
+      return state.set('health', health - 10)
+    }
+    return state
+  },
 })
 
 const opponents = createReducer(initialOpponents, {
@@ -118,15 +127,26 @@ const opponents = createReducer(initialOpponents, {
     const { id, value } = payload
     return state.setIn([id, 'isFiring'], value)
   },
+  [actions.HIT](state, { payload }) {
+    const { id } = payload
+    const health = state.getIn([id, 'health'])
+    if (health) {
+      return state.setIn([id, 'health'], health - 10)
+    }
+    return state
+  },
 })
 
 const boom = createReducer(initialBoom, {
   [actions.HIT](state, { payload }) {
     const { x, y } = payload
-    return state
-      .set('x', x)
-      .set('y', y)
-      .set('isActive', true)
+    return state.merge(
+      Map({
+        x,
+        y,
+        isActive: true,
+      })
+    )
   },
   [actions.HIT_END](state) {
     return state.set('isActive', false)

@@ -14,7 +14,6 @@ import { Loop, Stage, World, KeyListener } from 'react-game-kit'
 import {
   playerUpdate,
   playerUpdateMovement,
-  playerUpdatePosition,
   playerUpdateTurretAngle,
 } from '/src/engine/actions'
 import { Cursor } from '/src/styled/components'

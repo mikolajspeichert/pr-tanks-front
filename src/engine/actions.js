@@ -35,16 +35,6 @@ const playerUpdate = (x, y, dir) => {
   }
 }
 
-const playerUpdatePosition = (x, y) => {
-  emitPositionChange(x, y)
-  return {
-    type: actions.PLAYER_UPDATE_POS,
-    payload: {
-      x,
-      y,
-    },
-  }
-}
 
 const playerUpdateMovement = val =>
   // emitMovementChange(val)
@@ -80,14 +70,6 @@ const opponentUpdate = (id, x, y, dir) => ({
   },
 })
 
-const opponentUpdatePosition = (id, x, y) => ({
-  type: actions.OPPONENT_POS,
-  payload: {
-    id,
-    x,
-    y,
-  },
-})
 
 const opponentUpdateMovement = (id, val) => ({
   type: actions.OPPONENT_MOVEMENT,
@@ -113,9 +95,13 @@ const changeHost = (host, port) => ({
   },
 })
 
-const boom = (x, y) => ({
+const boom = (id, x, y) => ({
   type: actions.HIT,
-  payload: { x, y, deg: Math.floor(Math.random() * 360) },
+  payload: { id, x, y, deg: Math.floor(Math.random() * 360) },
+})
+
+const boomEnd = () => ({
+  type: actions.HIT_END,
 })
 
 const shotMade = id => ({
@@ -131,16 +117,15 @@ const shotEnd = id => ({
 export {
   actions,
   boom,
+  boomEnd,
   playerInit,
   changeHost,
   shotMade,
   shotEnd,
   playerUpdate,
   opponentUpdate,
-  playerUpdatePosition,
   playerUpdateMovement,
   playerUpdateTurretAngle,
   opponentUpdateMovement,
-  opponentUpdatePosition,
   opponentUpdateTurretAngle,
 }
