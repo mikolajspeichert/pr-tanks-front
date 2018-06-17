@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Loop, Stage, World, KeyListener } from 'react-game-kit'
 import {
+  playerUpdate,
   playerUpdateMovement,
   playerUpdatePosition,
   playerUpdateTurretAngle,
@@ -64,26 +65,27 @@ const enhance = compose(
       shoot,
       opponentsPositions,
     }) => () => {
+      let newdir = dir
       if (keys.isDown(keys.SPACE)) {
         if (val > 0.2) {
-          dispatch(playerUpdateMovement(dir, val - 0.2))
+          dispatch(playerUpdateMovement(val - 0.2))
         } else if (val < -0.2) {
-          dispatch(playerUpdateMovement(dir, val + 0.2))
+          dispatch(playerUpdateMovement(val + 0.2))
         } else {
-          dispatch(playerUpdateMovement(dir, 0.0))
+          dispatch(playerUpdateMovement(0.0))
         }
       } else if (keys.isDown(87) && val < 3.0) {
-        dispatch(playerUpdateMovement(dir, val + 0.1))
+        dispatch(playerUpdateMovement(val + 0.1))
       } else if (keys.isDown(83) && val > -3.0) {
-        dispatch(playerUpdateMovement(dir, val - 0.1))
+        dispatch(playerUpdateMovement(val - 0.1))
       }
       let degDiff = 0
       if (keys.isDown(65)) {
-        degDiff = -2
-        dispatch(playerUpdateMovement(dir - 2 < 0 ? 358 : dir - 2, val))
+        degDiff = -1
+        newdir = dir - 1 < 0 ? 359 : dir - 1
       } else if (keys.isDown(68)) {
-        degDiff = 2
-        dispatch(playerUpdateMovement(dir + 2 > 360 ? 2 : dir + 2, val))
+        degDiff = 1
+        newdir = dir + 1 > 360 ? 1 : dir + 1
       }
       let turretTargetAngle = Math.round(
         Math.atan2(mouseY - display.y * scale, mouseX - display.x * scale) *
@@ -122,18 +124,16 @@ const enhance = compose(
         y: newy,
         oldx: x,
         oldy: y,
+        dir: newdir,
         opponents: opponentsPositions,
       }
-      if (newx !== x || newy !== y)
-        checkForCollisions(params, (a, b) =>
-          dispatch(playerUpdatePosition(a, b))
-        )
-
       if (shot > 0) {
         if (shot + 1 > 10) shoot(0)
         else shoot(shot + 1)
         if (shot === 1) emitShot(newx, newy, turret)
       }
+      if (newx === x && newy === y && newdir === dir) return
+      checkForCollisions(params, (a, b, c) => dispatch(playerUpdate(a, b, c)))
     },
     handleShot: ({ shoot, shot }) => () => {
       if (shot !== 1) shoot(1)

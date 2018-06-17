@@ -4,6 +4,7 @@ import {
   opponentUpdateTurretAngle,
   opponentUpdatePosition,
   opponentUpdateMovement,
+  opponentUpdate,
   shotMade,
   shotEnd,
 } from '/src/engine/actions'
@@ -11,7 +12,10 @@ import {
 import Sockets from './core'
 
 const getIntValue = string => parseInt(string.split(':')[1], 10)
-const getFloatValue = string => parseFloat(string.split(':')[1])
+
+const emitUpdate = (x, y, dir) => {
+  Sockets.emit(`u,${x.toFixed(1)},${y.toFixed(1)},${dir}`)
+}
 
 const emitPositionChange = (x, y) => {
   Sockets.emit(`p,${x.toFixed(2)},${y.toFixed(2)}`)
@@ -52,6 +56,17 @@ const listenOnEvents = ({ data }) => {
       store.dispatch(shotMade(id))
       setTimeout(() => shotEnd(id), 100)
       break
+    case 'u': {
+      store.dispatch(
+        opponentUpdate(
+          id,
+          parseFloat(pairs[1]),
+          parseFloat(pairs[2]),
+          parseFloat(pairs[3])
+        )
+      )
+      break
+    }
     case 'o':
       break
     default:
@@ -87,6 +102,7 @@ export {
   emitPositionChange,
   emitTurretAngleChange,
   emitShot,
+  emitUpdate,
   initListeners,
   initSockets,
 }

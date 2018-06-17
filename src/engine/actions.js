@@ -2,15 +2,18 @@ import {
   emitMovementChange,
   emitTurretAngleChange,
   emitPositionChange,
+  emitUpdate,
 } from '/src/services/Sockets'
 
 const actions = {
   INIT_PLAYER: 'player/INIT',
+  PLAYER_UPDATE: 'player/R',
   PLAYER_UPDATE_POS: 'player/POS',
   PLAYER_UPDATE_MOV: 'player/MOV',
   PLAYER_UPDATE_TURRET: 'player/TURRET',
   PLAYER_SHOT: 'player/SHOT',
   INIT_OPPONENT: 'opponent/INIT',
+  OPPONENT_UPDATE: 'opponent/R',
   OPPONENT_MOVEMENT: 'opponent/MOV',
   OPPONENT_POS: 'opponent/POS',
   OPPONENT_TURRET: 'opponent/TURRET',
@@ -18,6 +21,18 @@ const actions = {
   HIT: 'HIT',
   HIT_END: 'HIT_END',
   SETTINGS_HOST: 'settings/HOST',
+}
+
+const playerUpdate = (x, y, dir) => {
+  emitUpdate(x, y, dir)
+  return {
+    type: actions.PLAYER_UPDATE,
+    payload: {
+      x,
+      y,
+      dir,
+    },
+  }
 }
 
 const playerUpdatePosition = (x, y) => {
@@ -31,16 +46,14 @@ const playerUpdatePosition = (x, y) => {
   }
 }
 
-const playerUpdateMovement = (dir, val) => {
-  emitMovementChange(dir, val)
-  return {
+const playerUpdateMovement = val =>
+  // emitMovementChange(dir, val)
+  ({
     type: actions.PLAYER_UPDATE_MOV,
     payload: {
-      dir,
       val,
     },
-  }
-}
+  })
 
 const playerUpdateTurretAngle = dir => {
   emitTurretAngleChange(dir)
@@ -57,6 +70,16 @@ const playerInit = payload => ({
   payload,
 })
 
+const opponentUpdate = (id, x, y, dir) => ({
+  type: actions.OPPONENT_UPDATE,
+  payload: {
+    id,
+    x,
+    y,
+    dir,
+  },
+})
+
 const opponentUpdatePosition = (id, x, y) => ({
   type: actions.OPPONENT_POS,
   payload: {
@@ -66,11 +89,10 @@ const opponentUpdatePosition = (id, x, y) => ({
   },
 })
 
-const opponentUpdateMovement = (id, dir, val) => ({
+const opponentUpdateMovement = (id, val) => ({
   type: actions.OPPONENT_MOVEMENT,
   payload: {
     id,
-    dir,
     val,
   },
 })
@@ -113,6 +135,8 @@ export {
   changeHost,
   shotMade,
   shotEnd,
+  playerUpdate,
+  opponentUpdate,
   playerUpdatePosition,
   playerUpdateMovement,
   playerUpdateTurretAngle,

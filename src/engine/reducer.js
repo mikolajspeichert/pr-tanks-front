@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux-immutable'
 import { createReducer } from 'redux-create-reducer'
-import { fromJS } from 'immutable'
+import { fromJS, Map } from 'immutable'
 import { save, get, keys } from '/src/services/storage'
 import { actions } from './actions'
 
@@ -65,8 +65,18 @@ const player = createReducer(initialPlayer, {
   [actions.INIT_PLAYER](state, action) {
     return state.merge(action.payload)
   },
+  [actions.PLAYER_UPDATE](state, { payload }) {
+    const { x, y, dir } = payload
+    return state.merge(
+      Map({
+        x,
+        y,
+        hullDir: dir,
+      })
+    )
+  },
   [actions.PLAYER_UPDATE_MOV](state, { payload }) {
-    return state.set('hullDir', payload.dir).set('movVal', payload.val)
+    return state.set('movVal', payload.val)
   },
   [actions.PLAYER_UPDATE_POS](state, { payload }) {
     return state.set('x', payload.x).set('y', payload.y)
@@ -80,9 +90,21 @@ const opponents = createReducer(initialOpponents, {
   [actions.INIT_OPPONENT](state, action) {
     return state.merge(fromJS({ [action.payload.id]: action.payload }))
   },
+  [actions.OPPONENT_UPDATE](state, { payload }) {
+    const { id, x, y, dir } = payload
+    return state.merge(
+      Map({
+        [id]: {
+          x,
+          y,
+          hullDir: dir,
+        },
+      })
+    )
+  },
   [actions.OPPONENT_MOVEMENT](state, { payload }) {
-    const { id, val, dir } = payload
-    return state.setIn([id, 'hullDir'], dir).setIn([id, 'movVal'], val)
+    const { id, val } = payload
+    return state.setIn([id, 'movVal'], val)
   },
   [actions.OPPONENT_POS](state, { payload }) {
     const { id, x, y } = payload
