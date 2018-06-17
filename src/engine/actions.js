@@ -47,7 +47,7 @@ const playerUpdatePosition = (x, y) => {
 }
 
 const playerUpdateMovement = val =>
-  // emitMovementChange(dir, val)
+  // emitMovementChange(val)
   ({
     type: actions.PLAYER_UPDATE_MOV,
     payload: {

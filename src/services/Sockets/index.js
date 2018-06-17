@@ -21,8 +21,8 @@ const emitPositionChange = (x, y) => {
   Sockets.emit(`p,${x.toFixed(2)},${y.toFixed(2)}`)
 }
 
-const emitMovementChange = (dir, val) => {
-  Sockets.emit(`m,${dir.toFixed(2)},${val.toFixed(2)}`)
+const emitMovementChange = val => {
+  Sockets.emit(`m,${val.toFixed(2)}`)
 }
 
 const emitTurretAngleChange = angle => {
@@ -34,6 +34,7 @@ const emitShot = (posX, posY, dir) => {
 }
 
 const listenOnEvents = ({ data }) => {
+  console.log(data)
   const pairs = data.split(',')
   const id = pairs[0].split('')[1]
   switch (data.charAt(0)) {
@@ -44,9 +45,7 @@ const listenOnEvents = ({ data }) => {
       break
     }
     case 'm': {
-      store.dispatch(
-        opponentUpdateMovement(id, parseFloat(pairs[1]), parseFloat(pairs[2]))
-      )
+      store.dispatch(opponentUpdateMovement(id, parseFloat(pairs[1])))
       break
     }
     case 't':
