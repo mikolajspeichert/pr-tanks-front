@@ -7,6 +7,7 @@ import { actions } from './actions'
 const initialPlayer = fromJS({
   id: 0,
   hullDir: 225,
+  dead: false,
   movVal: 0.0,
   turretDir: 225,
   x: 3190,
@@ -63,7 +64,7 @@ const createInitialSettings = () => {
 
 const player = createReducer(initialPlayer, {
   [actions.INIT_PLAYER](state, action) {
-    return state.merge(action.payload)
+    return state.merge(fromJS({ ...action.payload, dead: false }))
   },
   [actions.PLAYER_UPDATE](state, { payload }) {
     const { x, y, dir } = payload
@@ -92,6 +93,9 @@ const player = createReducer(initialPlayer, {
       return state.set('health', health - 10)
     }
     return state
+  },
+  [actions.DEATH](state) {
+    return state.set('dead', true)
   },
 })
 

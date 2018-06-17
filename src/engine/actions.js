@@ -1,12 +1,12 @@
 import {
   emitMovementChange,
   emitTurretAngleChange,
-  emitPositionChange,
   emitUpdate,
 } from '/src/services/Sockets'
 
 const actions = {
   INIT_PLAYER: 'player/INIT',
+  DEATH: 'player/DEATH',
   PLAYER_UPDATE: 'player/R',
   PLAYER_UPDATE_POS: 'player/POS',
   PLAYER_UPDATE_MOV: 'player/MOV',
@@ -34,7 +34,6 @@ const playerUpdate = (x, y, dir) => {
     },
   }
 }
-
 
 const playerUpdateMovement = val =>
   // emitMovementChange(val)
@@ -69,7 +68,6 @@ const opponentUpdate = (id, x, y, dir) => ({
     dir,
   },
 })
-
 
 const opponentUpdateMovement = (id, val) => ({
   type: actions.OPPONENT_MOVEMENT,
@@ -114,8 +112,13 @@ const shotEnd = id => ({
   payload: { id, value: false },
 })
 
+const death = () => ({
+  type: actions.DEATH,
+})
+
 export {
   actions,
+  death,
   boom,
   boomEnd,
   playerInit,

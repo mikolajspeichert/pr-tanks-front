@@ -2,7 +2,7 @@ import React from 'react'
 import { compose, getContext, withProps } from 'recompose'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
+import { death } from '/src/engine/actions'
 import { playerHealthSelector } from '/src/engine/selectors'
 
 import { Wrapper, Text, HealthBar, Bar } from './styles'
@@ -14,8 +14,9 @@ const enhance = compose(
     return { health }
   }),
   withProps(({ health, dispatch }) => {
-    if(health < 0){
+    if (health < 0) {
       console.log('dead')
+      dispatch(death())
     }
   })
 )

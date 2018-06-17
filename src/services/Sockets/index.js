@@ -2,7 +2,6 @@ import store from '/src/engine/store'
 import {
   playerInit,
   opponentUpdateTurretAngle,
-  opponentUpdatePosition,
   opponentUpdateMovement,
   opponentUpdate,
   shotMade,
@@ -39,12 +38,6 @@ const listenOnEvents = ({ data }) => {
   const pairs = data.split(',')
   const id = pairs[0].split('')[1]
   switch (data.charAt(0)) {
-    case 'p': {
-      store.dispatch(
-        opponentUpdatePosition(id, parseFloat(pairs[1]), parseFloat(pairs[2]))
-      )
-      break
-    }
     case 'm': {
       store.dispatch(opponentUpdateMovement(id, parseFloat(pairs[1])))
       break
@@ -74,6 +67,17 @@ const listenOnEvents = ({ data }) => {
       setTimeout(() => {
         store.dispatch(boomEnd())
       }, 500)
+      break
+    }
+    case 'd': {
+      const payload = {
+        id: pairs[1],
+        hullDir: getIntValue(pairs[2]),
+        turretDir: getIntValue(pairs[3]),
+        x: getIntValue(pairs[4]),
+        y: getIntValue(pairs[5]),
+      }
+      store.dispatch(playerInit(payload))
       break
     }
     default:

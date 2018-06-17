@@ -1,5 +1,5 @@
 import React from 'react'
-import { compose, withState, withHandlers } from 'recompose'
+import { compose, withState, withHandlers, withProps } from 'recompose'
 import { connect } from 'react-redux'
 
 import { initListeners, initSockets } from '/src/services/Sockets'
@@ -15,7 +15,10 @@ const gameStates = {
 }
 
 const enhance = compose(
-  connect(state => ({ ...hostSelector(state) })),
+  connect(state => ({
+    ...hostSelector(state),
+    dead: state.getIn(['player', 'dead']),
+  })),
   withState('gameState', 'setGameState', gameStates.MENU),
   withHandlers({
     handlePlay: ({ setGameState, host, port }) => () => {
@@ -23,15 +26,18 @@ const enhance = compose(
       initListeners(() => setGameState(gameStates.GAME))
       setGameState(gameStates.WAITING_FOR_SERVER)
     },
+  }),
+  withProps(({ dead, setGameState }) => {
+    if (dead) setGameState(gameStates.WAITING_FOR_SERVER)
   })
 )
 
-const Presentation = enhance(({ gameState, handlePlay }) => {
+const Presentation = enhance(({ gameState, handlePlay, dead }) => {
   switch (gameState) {
     case gameStates.MENU:
       return <Menu onPlay={handlePlay} />
     case gameStates.WAITING_FOR_SERVER:
-      return <Waiting />
+      return <Waiting isDead={dead} />
     case gameStates.GAME:
       return <Game />
     default:
