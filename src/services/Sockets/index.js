@@ -34,7 +34,6 @@ const emitShot = (posX, posY, dir) => {
 }
 
 const listenOnEvents = ({ data }) => {
-  console.log(data)
   const pairs = data.split(',')
   const id = pairs[0].split('')[1]
   switch (data.charAt(0)) {
