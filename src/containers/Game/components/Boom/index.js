@@ -22,13 +22,12 @@ const enhance = compose(
   })
 )
 
-const Boom = enhance(
-  ({ x, y, scale, isActive, deg }) =>
-    isActive ? (
-      <Wrapper x={x} y={y}>
-        <BoomComponent url={boomURL} scale={scale} deg={deg} />
-      </Wrapper>
-    ) : null
-)
+const Boom = enhance(({ x, y, scale, isActive, deg }) => {
+  return isActive ? (
+    <Wrapper x={x} y={y}>
+      <BoomComponent url={boomURL} scale={scale} deg={deg} />
+    </Wrapper>
+  ) : null
+})
 
 export default Boom

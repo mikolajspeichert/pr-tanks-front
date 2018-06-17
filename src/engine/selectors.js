@@ -9,8 +9,6 @@ const playerIdSelector = state => state.getIn(['player', 'id'])
 
 const opponentsSelector = state => state.get('opponents')
 
-const boomSelector = state => state.get('boom')
-
 const opponentSelector = (state, id) => state.getIn(['opponents', id])
 
 const hostSelector = state => ({
@@ -89,6 +87,20 @@ const opponentDisplaySelector = createSelector(
     a = playerPos.x - x
     b = playerPos.y - y
     return { x: playerDisp.x - a, y: playerDisp.y - b }
+  }
+)
+
+const boomSelector = createSelector(
+  state => state.get('boom'),
+  playerPositionSelector,
+  playerDisplaySelector,
+  (boom, playerPos, playerDisp) => {
+    const { x, y, isActive, deg } = boom.toJS()
+    let a
+    let b
+    a = playerPos.x - x
+    b = playerPos.y - y
+    return { x: playerDisp.x - a, y: playerDisp.y - b, isActive, deg }
   }
 )
 

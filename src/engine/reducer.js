@@ -143,12 +143,13 @@ const opponents = createReducer(initialOpponents, {
 
 const boom = createReducer(initialBoom, {
   [actions.HIT](state, { payload }) {
-    const { x, y } = payload
+    const { x, y, deg } = payload
     return state.merge(
       Map({
         x,
         y,
         isActive: true,
+        deg,
       })
     )
   },

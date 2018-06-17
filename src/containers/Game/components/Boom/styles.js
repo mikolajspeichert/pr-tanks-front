@@ -20,6 +20,7 @@ const BoomComponent = styled.div.attrs({
   width: 100px;
   height: 100px;
   cursor: none;
+  z-index: 5;
   background: url(${props => props.url});
 `
 

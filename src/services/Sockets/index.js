@@ -63,10 +63,11 @@ const listenOnEvents = ({ data }) => {
       break
     }
     case 'b': {
+      console.log(data)
       store.dispatch(boom(id, parseFloat(pairs[1]), parseFloat(pairs[2])))
       setTimeout(() => {
         store.dispatch(boomEnd())
-      }, 500)
+      }, 2000)
       break
     }
     case 'd': {
