@@ -52,7 +52,9 @@ const listenOnEvents = ({ data }) => {
       break
     case 's':
       store.dispatch(shotMade(id))
-      setTimeout(() => shotEnd(id), 100)
+      setTimeout(() => {
+        store.dispatch(shotEnd(id))
+      }, 300)
       break
     case 'u': {
       store.dispatch(
