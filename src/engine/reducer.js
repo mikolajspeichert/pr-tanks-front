@@ -94,11 +94,11 @@ const opponents = createReducer(initialOpponents, {
     const { id, x, y, dir } = payload
     return state.mergeDeep(
       Map({
-        [id]: {
+        [id]: Map({
           x,
           y,
           hullDir: dir,
-        },
+        }),
       })
     )
   },
