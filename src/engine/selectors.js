@@ -94,14 +94,17 @@ const boomSelector = createSelector(
   state => state.get('boom'),
   playerPositionSelector,
   playerDisplaySelector,
-  (boom, playerPos, playerDisp) => {
-    const { x, y, isActive, deg } = boom.toJS()
-    let a
-    let b
-    a = playerPos.x - x
-    b = playerPos.y - y
-    return { x: playerDisp.x - a, y: playerDisp.y - b, isActive, deg }
-  }
+  (booms, playerPos, playerDisp) =>
+    booms
+      .map(boom => {
+        const { x, y, deg } = boom.toJS()
+        let a
+        let b
+        a = playerPos.x - x
+        b = playerPos.y - y
+        return { x: playerDisp.x - a, y: playerDisp.y - b, deg }
+      })
+      .toJS()
 )
 
 const opponentAngleSelector = createSelector(opponentSelector, player => ({

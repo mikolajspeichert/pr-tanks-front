@@ -24,6 +24,7 @@ import {
   playerAngleSelector,
   opponentsIdsSelector,
   opponentsPositionsSelector,
+  boomSelector,
 } from '/src/engine/selectors'
 import Map from '../Map/index'
 import Tank from './components/Tank'
@@ -44,6 +45,7 @@ const enhance = compose(
     turret: playerAngleSelector(state).turretDeg,
     opponents: opponentsIdsSelector(state),
     opponentsPositions: opponentsPositionsSelector(state),
+    booms: boomSelector(state),
   })),
   withState('keyListener', 'setKeyListener', new KeyListener()),
   withState('shot', 'shoot', 0),
@@ -152,17 +154,23 @@ const enhance = compose(
   })
 )
 
-const Game = enhance(({ mouseX, mouseY, handleShot, shot, opponents }) => (
-  <World>
-    <LeftPanel />
-    <RightPanel />
-    <Map />
-    <Tank shot={shot !== 0} />
-    {opponents.map(opponent => <Tank key={opponent} id={opponent} opponent />)}
-    <Cursor mouseX={mouseX} mouseY={mouseY} onClick={handleShot} />
-    <Boom />
-  </World>
-))
+const Game = enhance(
+  ({ mouseX, mouseY, handleShot, shot, opponents, booms }) => (
+    <World>
+      <LeftPanel />
+      <RightPanel />
+      <Map />
+      <Tank shot={shot !== 0} />
+      {opponents.map(opponent => (
+        <Tank key={opponent} id={opponent} opponent />
+      ))}
+      <Cursor mouseX={mouseX} mouseY={mouseY} onClick={handleShot} />
+      {booms.map(boom => (
+        <Boom key={boom.deg} x={boom.x} y={boom.y} deg={boom.deg} />
+      ))}
+    </World>
+  )
+)
 
 const LoopedGame = () => (
   <Loop>

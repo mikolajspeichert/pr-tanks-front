@@ -16,12 +16,7 @@ const initialPlayer = fromJS({
   isFiring: false,
 })
 
-const initialBoom = fromJS({
-  isActive: false,
-  x: 0,
-  y: 0,
-  deg: 0,
-})
+const initialBoom = fromJS([])
 
 const initialOpponents = fromJS({
   '1': {
@@ -144,17 +139,16 @@ const opponents = createReducer(initialOpponents, {
 const boom = createReducer(initialBoom, {
   [actions.HIT](state, { payload }) {
     const { x, y, deg } = payload
-    return state.merge(
+    return state.push(
       Map({
         x,
         y,
-        isActive: true,
         deg,
       })
     )
   },
   [actions.HIT_END](state) {
-    return state.set('isActive', false)
+    return state.shift()
   },
 })
 
