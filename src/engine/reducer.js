@@ -183,7 +183,7 @@ const settings = createReducer(createInitialSettings(), {
     return state.merge({ ...payload })
   },
   [actions.SETTINGS_STATS](state, { payload }) {
-    return state.merge(fromJS(payload))
+    return state.mergeIn(['stats'], fromJS(payload))
   },
 })
 
