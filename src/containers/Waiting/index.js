@@ -33,7 +33,7 @@ const enhance = compose(
 const Waiting = enhance(({ dots, isDead }) => (
   <Container>
     <Title>
-      {isDead ? `Waiting for server${dots}` : `You are dead${dots}`}
+      {!isDead ? `Waiting for server${dots}` : `You are dead${dots}`}
     </Title>
   </Container>
 ))
