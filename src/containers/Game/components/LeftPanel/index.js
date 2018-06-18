@@ -15,7 +15,6 @@ const enhance = compose(
   }),
   withProps(({ health, dispatch }) => {
     if (health <= 0) {
-      console.log('dead')
       dispatch(death())
     }
   })

@@ -30,6 +30,10 @@ const emitTurretAngleChange = angle => {
   Sockets.emit(`t,${angle.toFixed(2)}`)
 }
 
+const emitDeath = () => {
+  Sockets.emit('d')
+}
+
 const emitShot = (posX, posY, dir) => {
   Sockets.emit(`s,${posX.toFixed(2)},${posY.toFixed(2)},${dir.toFixed(2)}`)
 }
@@ -70,13 +74,15 @@ const listenOnEvents = ({ data }) => {
       }, 500)
       break
     }
-    case 'd': {
+    case 'r': {
       const payload = {
-        id: pairs[1],
         hullDir: getIntValue(pairs[2]),
         turretDir: getIntValue(pairs[3]),
         x: getIntValue(pairs[4]),
         y: getIntValue(pairs[5]),
+        health: 100,
+        dead: false,
+        isFiring: false,
       }
       store.dispatch(playerInit(payload))
       break
@@ -115,6 +121,7 @@ export {
   emitTurretAngleChange,
   emitShot,
   emitUpdate,
+  emitDeath,
   initListeners,
   initSockets,
 }

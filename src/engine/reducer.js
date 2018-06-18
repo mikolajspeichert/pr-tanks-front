@@ -59,7 +59,7 @@ const createInitialSettings = () => {
 
 const player = createReducer(initialPlayer, {
   [actions.INIT_PLAYER](state, action) {
-    return state.merge(fromJS({ ...action.payload, dead: false }))
+    return state.merge(fromJS(action.payload))
   },
   [actions.PLAYER_UPDATE](state, { payload }) {
     const { x, y, dir } = payload

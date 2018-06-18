@@ -1,7 +1,7 @@
 import {
-  emitMovementChange,
   emitTurretAngleChange,
   emitUpdate,
+  emitDeath,
 } from '/src/services/Sockets'
 
 const actions = {
@@ -112,9 +112,12 @@ const shotEnd = id => ({
   payload: { id, value: false },
 })
 
-const death = () => ({
-  type: actions.DEATH,
-})
+const death = () => {
+  emitDeath()
+  return {
+    type: actions.DEATH,
+  }
+}
 
 export {
   actions,
