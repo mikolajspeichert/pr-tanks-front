@@ -35,7 +35,7 @@ const enhance = compose(
     if (dead && gameState !== gameStates.WAITING_FOR_SERVER)
       setGameState(gameStates.WAITING_FOR_SERVER)
     if (!dead && areListenersReady && gameState !== gameStates.GAME)
-      setGameState(gameStates.GAME)
+      setTimeout(() => setGameState(gameStates.GAME), 1000)
   })
 )
 
