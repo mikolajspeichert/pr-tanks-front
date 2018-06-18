@@ -103,6 +103,8 @@ const player = createReducer(initialPlayer, {
     const { id } = payload
     const myId = state.get('id')
     const health = state.get('health')
+    const dead = state.get('dead')
+    if (dead) return state
     if (myId === id) {
       return state.merge(
         fromJS({
