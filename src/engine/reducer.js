@@ -55,6 +55,24 @@ const createInitialSettings = () => {
   return fromJS({
     host,
     port,
+    stats: {
+      0: {
+        kills: 0,
+        deaths: 0,
+      },
+      1: {
+        kills: 0,
+        deaths: 0,
+      },
+      2: {
+        kills: 0,
+        deaths: 0,
+      },
+      3: {
+        kills: 0,
+        deaths: 0,
+      },
+    },
   })
 }
 
@@ -163,6 +181,9 @@ const settings = createReducer(createInitialSettings(), {
     save(keys.host, payload.host)
     save(keys.port, payload.port)
     return state.merge({ ...payload })
+  },
+  [actions.SETTINGS_STATS](state, { payload }) {
+    return state.merge(fromJS(payload))
   },
 })
 

@@ -14,7 +14,7 @@ const enhance = compose(
     const shooterId = state.getIn(['player', 'lastHitBy'])
     return { health, shooterId }
   }),
-  withProps(({ health, dispatch }) => {
+  withProps(({ health, dispatch, shooterId }) => {
     if (health <= 0) {
       dispatch(death(shooterId))
     }

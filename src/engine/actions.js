@@ -21,6 +21,7 @@ const actions = {
   HIT: 'HIT',
   HIT_END: 'HIT_END',
   SETTINGS_HOST: 'settings/HOST',
+  SETTINGS_STATS: 'settings/STATS',
 }
 
 const playerUpdate = (x, y, dir) => {
@@ -119,6 +120,11 @@ const death = shooterId => {
   }
 }
 
+const updateStats = payload => ({
+  type: actions.SETTINGS_STATS,
+  payload,
+})
+
 export {
   actions,
   death,
@@ -130,6 +136,7 @@ export {
   shotEnd,
   playerUpdate,
   opponentUpdate,
+  updateStats,
   playerUpdateMovement,
   playerUpdateTurretAngle,
   opponentUpdateMovement,

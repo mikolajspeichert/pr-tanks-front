@@ -8,6 +8,7 @@ import {
   shotEnd,
   boom,
   boomEnd,
+  updateStats,
 } from '/src/engine/actions'
 
 import Sockets from './core'
@@ -82,15 +83,37 @@ const listenOnEvents = ({ data }) => {
     }
     case 'r': {
       const payload = {
-        hullDir: getIntValue(pairs[2]),
-        turretDir: getIntValue(pairs[3]),
-        x: getIntValue(pairs[4]),
-        y: getIntValue(pairs[5]),
+        hullDir: getIntValue(pairs[1]),
+        turretDir: getIntValue(pairs[2]),
+        x: getIntValue(pairs[3]),
+        y: getIntValue(pairs[4]),
         health: 100,
         dead: false,
         isFiring: false,
       }
       store.dispatch(playerInit(payload))
+      break
+    }
+    case 'k': {
+      const payload = {
+        '0': {
+          kills: parseInt(pairs[1], 10),
+          deaths: parseInt(pairs[2], 10),
+        },
+        '1': {
+          kills: parseInt(pairs[3], 10),
+          deaths: parseInt(pairs[4], 10),
+        },
+        '2': {
+          kills: parseInt(pairs[5], 10),
+          deaths: parseInt(pairs[6], 10),
+        },
+        '3': {
+          kills: parseInt(pairs[7], 10),
+          deaths: parseInt(pairs[8], 10),
+        },
+      }
+      store.dispatch(updateStats(payload))
       break
     }
     default:

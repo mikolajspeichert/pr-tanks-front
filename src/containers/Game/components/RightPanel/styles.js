@@ -9,21 +9,39 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
   top: ${({ scale }) => scale * 30}px;
   right: ${({ scale }) => scale * 30}px;
   width: ${({ scale }) => scale * 300}px;
-  height: ${({ scale }) => scale * 100}px;
+  height: ${({ scale }) => scale * 150}px;
   z-index: 2;
   opacity: 0.8;
 `
 
 const Text = styled.h1`
-  font-size: ${({ scale }) => scale * 25}px;
-  margin: 0;
+  font-size: ${({ scale }) => scale * 20}px;
+  margin: ${({ scale }) => scale * 7}px;
   font-family: 'Invasion2000', sans-serif;
   color: ${colors.brown};
   text-shadow: 0 1px 1px black;
 `
 
-export { Wrapper, Text }
+const ColoredText = Text.extend`
+  font-size: ${({ scale }) => scale * 20}px;
+  color: ${({ color }) => {
+    switch (color) {
+      case '0':
+        return colors.green
+      case '3':
+        return colors.yellowLight
+      case '2':
+        return colors.gray
+      case '1':
+        return colors.red
+      default:
+        return colors.brown
+    }
+  }};
+  text-shadow: 0 1px 1px black;
+`
+
+export { Wrapper, Text, ColoredText }
