@@ -31,7 +31,7 @@ const RightPanel = enhance(({ scale, stats }) => (
     {Object.keys(stats).map(key => (
       <ColoredText key={key} color={key} scale={scale}>{`${getColorName(
         key
-      )} K:${stats[key].kills} D:${stats[key].deaths}`}</ColoredText>
+      )} K: ${stats[key].kills} D: ${stats[key].deaths}`}</ColoredText>
     ))}
   </Wrapper>
 ))
