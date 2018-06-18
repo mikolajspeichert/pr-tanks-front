@@ -20,16 +20,22 @@ const enhance = compose(
     dead: state.getIn(['player', 'dead']),
   })),
   withState('gameState', 'setGameState', gameStates.MENU),
+  withState('areListenersReady', 'setListeners', false),
   withHandlers({
-    handlePlay: ({ setGameState, host, port }) => () => {
+    handlePlay: ({ setGameState, host, port, setListeners }) => () => {
       initSockets(host, port)
-      initListeners(() => setGameState(gameStates.GAME))
+      initListeners(() => {
+        setGameState(gameStates.GAME)
+        setListeners(true)
+      })
       setGameState(gameStates.WAITING_FOR_SERVER)
     },
   }),
-  withProps(({ dead, gameState, setGameState }) => {
+  withProps(({ dead, gameState, setGameState, areListenersReady }) => {
     if (dead && gameState !== gameStates.WAITING_FOR_SERVER)
       setGameState(gameStates.WAITING_FOR_SERVER)
+    if (!dead && areListenersReady && gameState !== gameStates.GAME)
+      setGameState(gameStates.GAME)
   })
 )
 
