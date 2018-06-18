@@ -36,7 +36,7 @@ const emitShot = (posX, posY, dir) => {
 
 const listenOnEvents = ({ data }) => {
   const pairs = data.split(',')
-  const id = pairs[0].split('')[1]
+  const id = pairs[0].split('').pop()
   switch (data.charAt(0)) {
     case 'm': {
       store.dispatch(opponentUpdateMovement(id, parseFloat(pairs[1])))
@@ -67,7 +67,7 @@ const listenOnEvents = ({ data }) => {
       store.dispatch(boom(id, parseFloat(pairs[1]), parseFloat(pairs[2])))
       setTimeout(() => {
         store.dispatch(boomEnd())
-      }, 2000)
+      }, 500)
       break
     }
     case 'd': {
