@@ -82,11 +82,12 @@ const listenOnEvents = ({ data }) => {
       break
     }
     case 'r': {
+      console.log(data)
       const payload = {
-        hullDir: getIntValue(pairs[1]),
-        turretDir: getIntValue(pairs[2]),
-        x: getIntValue(pairs[3]),
-        y: getIntValue(pairs[4]),
+        hullDir: parseInt(pairs[1], 10),
+        turretDir: parseInt(pairs[2], 10),
+        x: parseInt(pairs[3], 10),
+        y: parseInt(pairs[4], 10),
         health: 100,
         dead: false,
         isFiring: false,
