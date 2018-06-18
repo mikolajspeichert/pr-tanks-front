@@ -11,11 +11,12 @@ const enhance = compose(
   getContext({ scale: PropTypes.number }),
   connect(state => {
     const health = playerHealthSelector(state)
-    return { health }
+    const shooterId = state.getIn(['player', 'lastHitBy'])
+    return { health, shooterId }
   }),
   withProps(({ health, dispatch }) => {
     if (health <= 0) {
-      dispatch(death())
+      dispatch(death(shooterId))
     }
   })
 )

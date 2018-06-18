@@ -14,6 +14,7 @@ const initialPlayer = fromJS({
   y: 430,
   health: 100,
   isFiring: false,
+  lastHitBy: '',
 })
 
 const initialBoom = fromJS([])
@@ -85,7 +86,12 @@ const player = createReducer(initialPlayer, {
     const myId = state.get('id')
     const health = state.get('health')
     if (myId === id) {
-      return state.set('health', health - 10)
+      return state.merge(
+        fromJS({
+          health: health - 10,
+          lastHitBy: payload.shooterId,
+        })
+      )
     }
     return state
   },

@@ -30,8 +30,8 @@ const emitTurretAngleChange = angle => {
   Sockets.emit(`t,${angle.toFixed(2)}`)
 }
 
-const emitDeath = () => {
-  Sockets.emit('d')
+const emitDeath = id => {
+  Sockets.emit(`d${id}`)
 }
 
 const emitShot = (posX, posY, dir) => {
@@ -67,7 +67,14 @@ const listenOnEvents = ({ data }) => {
       break
     }
     case 'b': {
-      store.dispatch(boom(id, parseFloat(pairs[1]), parseFloat(pairs[2])))
+      store.dispatch(
+        boom(
+          id,
+          parseFloat(pairs[1]),
+          parseFloat(pairs[2]),
+          parseInt(pairs[3], 10)
+        )
+      )
       setTimeout(() => {
         store.dispatch(boomEnd())
       }, 500)

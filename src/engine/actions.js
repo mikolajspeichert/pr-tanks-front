@@ -93,9 +93,9 @@ const changeHost = (host, port) => ({
   },
 })
 
-const boom = (id, x, y) => ({
+const boom = (id, x, y, shooterId) => ({
   type: actions.HIT,
-  payload: { id, x, y, deg: Math.floor(Math.random() * 360) },
+  payload: { id, x, y, deg: Math.floor(Math.random() * 360), shooterId },
 })
 
 const boomEnd = () => ({
@@ -112,8 +112,8 @@ const shotEnd = id => ({
   payload: { id, value: false },
 })
 
-const death = () => {
-  emitDeath()
+const death = shooterId => {
+  emitDeath(shooterId)
   return {
     type: actions.DEATH,
   }
