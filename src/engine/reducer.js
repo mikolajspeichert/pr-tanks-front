@@ -96,7 +96,6 @@ const opponents = createReducer(initialOpponents, {
   [actions.OPPONENT_UPDATE](state, { payload }) {
     const { id, x, y, dir, health } = payload
     const opp = state.get(id)
-    console.log(opp)
     if (!opp) {
       return state.mergeDeep(
         Map({
