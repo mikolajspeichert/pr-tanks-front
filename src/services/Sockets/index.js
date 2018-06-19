@@ -15,8 +15,8 @@ import Sockets from './core'
 
 const getIntValue = string => parseInt(string.split(':')[1], 10)
 
-const emitUpdate = (x, y, dir) => {
-  Sockets.emit(`u,${x.toFixed(1)},${y.toFixed(1)},${dir}`)
+const emitUpdate = (x, y, dir, health) => {
+  Sockets.emit(`u,${x.toFixed(1)},${y.toFixed(1)},${dir},${health}`)
 }
 
 const emitPositionChange = (x, y) => {
@@ -40,6 +40,7 @@ const emitShot = (posX, posY, dir) => {
 }
 
 const listenOnEvents = ({ data }) => {
+  console.log(data)
   const pairs = data.split(',')
   const id = pairs[0].split('').pop()
   switch (data.charAt(0)) {

@@ -127,6 +127,21 @@ const opponents = createReducer(initialOpponents, {
   },
   [actions.OPPONENT_TURRET](state, { payload }) {
     const { id, dir } = payload
+    const opp = state.get(id)
+    if (!opp) {
+      return state.mergeDeep(
+        Map({
+          [id]: Map({
+            x: -100,
+            y: -100,
+            hullDir: 0,
+            turretDir: dir,
+            health: 100,
+            isFiring: false,
+          }),
+        })
+      )
+    }
     return state.setIn([id, 'turretDir'], dir)
   },
   [actions.OPPONENT_SHOT](state, { payload }) {
