@@ -19,35 +19,7 @@ const initialPlayer = fromJS({
 
 const initialBoom = fromJS([])
 
-const initialOpponents = fromJS({
-  '1': {
-    hullDir: 0,
-    movVal: 0.0,
-    turretDir: 0,
-    x: 0,
-    y: 0,
-    health: 100,
-    isFiring: false,
-  },
-  '2': {
-    hullDir: 0,
-    movVal: 0.0,
-    turretDir: 0,
-    x: 0,
-    y: 0,
-    health: 100,
-    isFiring: false,
-  },
-  '3': {
-    hullDir: 0,
-    movVal: 0.0,
-    turretDir: 0,
-    x: 0,
-    y: 0,
-    health: 100,
-    isFiring: false,
-  },
-})
+const initialOpponents = fromJS({})
 
 const createInitialSettings = () => {
   const host = get(keys.host) || 'localhost'
@@ -121,24 +93,34 @@ const player = createReducer(initialPlayer, {
 })
 
 const opponents = createReducer(initialOpponents, {
-  [actions.INIT_OPPONENT](state, action) {
-    return state.merge(fromJS({ [action.payload.id]: action.payload }))
-  },
   [actions.OPPONENT_UPDATE](state, { payload }) {
-    const { id, x, y, dir } = payload
+    const { id, x, y, dir, health } = payload
+    const opp = state.get(id)
+    console.log(opp)
+    if (!opp) {
+      return state.mergeDeep(
+        Map({
+          [id]: Map({
+            x,
+            y,
+            hullDir: dir,
+            turretDir: 0,
+            health,
+            isFiring: false,
+          }),
+        })
+      )
+    }
     return state.mergeDeep(
       Map({
         [id]: Map({
           x,
           y,
           hullDir: dir,
+          health,
         }),
       })
     )
-  },
-  [actions.OPPONENT_MOVEMENT](state, { payload }) {
-    const { id, val } = payload
-    return state.setIn([id, 'movVal'], val)
   },
   [actions.OPPONENT_POS](state, { payload }) {
     const { id, x, y } = payload

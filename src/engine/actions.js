@@ -12,9 +12,7 @@ const actions = {
   PLAYER_UPDATE_MOV: 'player/MOV',
   PLAYER_UPDATE_TURRET: 'player/TURRET',
   PLAYER_SHOT: 'player/SHOT',
-  INIT_OPPONENT: 'opponent/INIT',
   OPPONENT_UPDATE: 'opponent/R',
-  OPPONENT_MOVEMENT: 'opponent/MOV',
   OPPONENT_POS: 'opponent/POS',
   OPPONENT_TURRET: 'opponent/TURRET',
   OPPONENT_SHOT: 'opponent/SHOT',
@@ -24,8 +22,8 @@ const actions = {
   SETTINGS_STATS: 'settings/STATS',
 }
 
-const playerUpdate = (x, y, dir) => {
-  emitUpdate(x, y, dir)
+const playerUpdate = (x, y, dir, health) => {
+  emitUpdate(x, y, dir, health)
   return {
     type: actions.PLAYER_UPDATE,
     payload: {
@@ -60,13 +58,14 @@ const playerInit = payload => ({
   payload,
 })
 
-const opponentUpdate = (id, x, y, dir) => ({
+const opponentUpdate = (id, x, y, dir, health) => ({
   type: actions.OPPONENT_UPDATE,
   payload: {
     id,
     x,
     y,
     dir,
+    health,
   },
 })
 

@@ -62,7 +62,8 @@ const listenOnEvents = ({ data }) => {
           id,
           parseFloat(pairs[1]),
           parseFloat(pairs[2]),
-          parseFloat(pairs[3])
+          parseFloat(pairs[3]),
+          parseInt(pairs[4], 10)
         )
       )
       break

@@ -22,7 +22,7 @@ const checkForPlayersCollisions = params => {
 const checkForCollisions = (params, disp) => {
   checkForWaterCollisions(params)
   checkForPlayersCollisions(params)
-  disp(params.x, params.y, params.dir)
+  disp(params.x, params.y, params.dir, params.health)
 }
 
 export { checkForCollisions }

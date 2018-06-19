@@ -25,6 +25,7 @@ import {
   opponentsIdsSelector,
   opponentsPositionsSelector,
   boomSelector,
+  playerHealthSelector,
 } from '/src/engine/selectors'
 import Map from '../Map/index'
 import Tank from './components/Tank'
@@ -42,6 +43,7 @@ const enhance = compose(
   connect(state => ({
     ...playerMovementSelector(state),
     display: playerDisplaySelector(state),
+    health: playerHealthSelector(state),
     turret: playerAngleSelector(state).turretDeg,
     opponents: opponentsIdsSelector(state),
     opponentsPositions: opponentsPositionsSelector(state),
@@ -65,6 +67,7 @@ const enhance = compose(
       shot,
       shoot,
       opponentsPositions,
+      health,
     }) => () => {
       let newdir = dir
       if (keys.isDown(keys.SPACE)) {
@@ -126,6 +129,7 @@ const enhance = compose(
         oldx: x,
         oldy: y,
         dir: newdir,
+        health,
         opponents: opponentsPositions,
       }
       if (shot > 0) {
@@ -134,7 +138,9 @@ const enhance = compose(
         if (shot === 1) emitShot(newx, newy, turret)
       }
       if (newx === x && newy === y && newdir === dir) return
-      checkForCollisions(params, (a, b, c) => dispatch(playerUpdate(a, b, c)))
+      checkForCollisions(params, (a, b, c, d) =>
+        dispatch(playerUpdate(a, b, c, d))
+      )
     },
     handleShot: ({ shoot, shot }) => () => {
       if (shot !== 1) shoot(1)
